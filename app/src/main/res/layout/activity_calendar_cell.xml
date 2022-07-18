@@ -17,14 +17,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:id="@+id/redButton"
-        android:backgroundTint="@color/red"
+        android:layout_height="wrap_content"
+        android:id="@+id/colouredRecRelLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/cellDayText"
-        />
+        >
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:id="@+id/redButton"
+            android:backgroundTint="@color/red"
+            />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

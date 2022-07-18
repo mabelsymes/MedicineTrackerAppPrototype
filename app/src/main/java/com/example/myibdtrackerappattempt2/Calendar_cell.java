@@ -3,11 +3,13 @@ package com.example.myibdtrackerappattempt2;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.nfc.Tag;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class Calendar_cell {
@@ -17,6 +19,8 @@ public class Calendar_cell {
     private int day = 0, month = 0, year = 0;
     private Boolean isRed;
     private Context Cal_cellContext;
+    private Button redButton;
+    private TextView cellDayText;
 
     public Calendar_cell(){
         this.isRed = false;

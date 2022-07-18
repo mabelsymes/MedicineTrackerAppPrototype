@@ -1,6 +1,7 @@
 package com.example.myibdtrackerappattempt2;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,47 +42,59 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         View view = inflater.inflate(R.layout.activity_calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int)(parent.getHeight() * 0.1666666666);
-        return new CalendarViewHolder(view, onItemListener);
+        return new CalendarViewHolder(view, onItemListener, daysOfMonth, selectedDate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
         holder.dayOfMonth.setText(daysOfMonth.get(position));
-        holder.redButton.setOnClickListener(new View.OnClickListener() {
+        if (!daysOfMonth.get(position).equals("")){
+            String[] date = selectedDate.toString().split("-");
+            int month = Integer.valueOf(date[1]);
+            int year = Integer.valueOf(date[0]);
+            Calendar_cell currentDay = Utils.getInstance(calAdapContext).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
+            if (currentDay.getRed()) {
+                holder.redButton.setBackgroundColor(Color.RED);
+            } else {
+                holder.redButton.setBackgroundColor(Color.WHITE);
+            }
+        } else {
+            holder.redButton.setBackgroundColor(Color.WHITE);
+        }
+        holder.cellDayText.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 String[] date = selectedDate.toString().split("-");
                 int month = Integer.valueOf(date[1]);
                 int year = Integer.valueOf(date[0]);
-                Calendar_cell currentDay = Utils.getInstance(calAdapContext).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
+                Calendar_cell currentDay = Utils.getInstance(view.getContext()).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
                 Log.d(TAG, "onClick: Red is " + currentDay.getRed());
                 if (currentDay.getRed() == false){
                     currentDay.setRed(true);
-                    Toast.makeText(v.getContext(), "Red is now true", Toast.LENGTH_SHORT).show();
-                } else {
+                    } else {
                     Log.d(TAG, "onClick: Changing to false");
                     currentDay.setRed(false);
-                    Toast.makeText(v.getContext(), "Red is now false", Toast.LENGTH_SHORT).show();
-                }
+                    }
                 Log.d(TAG, "onClick: Red is " + currentDay.getRed());
-                Utils.getInstance(v.getContext()).editDay(currentDay);
-
-
-//                    Event event = events.get(getAdapterPosition());
-//                    event.setExpanded(!event.isExpanded());
-//                    notifyItemChanged(getAdapterPosition());
+                Utils.getInstance(view.getContext()).editDay(currentDay);
+                notifyItemChanged(position);
             }
         });
+        
 
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
         private Button redButton;
+        private RelativeLayout colouredRecRelLayout;
+        private TextView cellDayText;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             redButton = itemView.findViewById(R.id.redButton);
+            colouredRecRelLayout = itemView.findViewById(R.id.colouredRecRelLayout);
+            cellDayText = itemView.findViewById(R.id.cellDayText);
         }
     }
 
@@ -93,6 +106,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     }
 
     public interface OnItemListener{
-        void onItemClick(int position, String dayText);
+        void onItemClick(int position, String text, String dayText, LocalDate selectedDate);
     }
 }

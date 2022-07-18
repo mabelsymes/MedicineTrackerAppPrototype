@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     private RecyclerView calendarRecView;
     private LocalDate selectedDate;
     private Button btnPrev, btnNext;
+    private RadioButton noneRadioBtn, redRadioBtn;
     Context context;
 
     @Override
@@ -91,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         monthYearText = findViewById(R.id.monthYearTV);
         btnNext = findViewById(R.id.btnNext);
         btnPrev = findViewById(R.id.btnPrev);
+        noneRadioBtn = findViewById(R.id.noneRadioBtn);
+        redRadioBtn = findViewById(R.id.redRadioBtn);
 
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,12 +122,12 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     }
 
     @Override
-    public void onItemClick(int position, String dayText) {
+    public void onItemClick(int position, String dayText, String day, LocalDate selectedDate) {
         if (dayText.equals("")){
 
         } else {
-            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
+//            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
 
     }

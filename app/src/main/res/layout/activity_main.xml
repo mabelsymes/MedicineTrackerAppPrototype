@@ -10,8 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal">
 
         <Button
@@ -49,6 +48,29 @@
             />
 
     </LinearLayout>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+
+        <RadioButton
+            android:id="@+id/noneRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="None"
+            android:checked="true"
+            />
+
+        <RadioButton
+            android:id="@+id/redRadioBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Red"
+            />
+
+    </RadioGroup>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -118,7 +140,5 @@
         android:id="@+id/calendarRecView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-
-
 
 </LinearLayout>
