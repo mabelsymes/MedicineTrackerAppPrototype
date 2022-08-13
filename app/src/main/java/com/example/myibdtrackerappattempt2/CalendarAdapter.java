@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -41,7 +42,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.activity_calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = (int)(parent.getHeight() * 0.1666666666);
+        layoutParams.height = (int)(parent.getHeight() * 0.2);
         return new CalendarViewHolder(view, onItemListener, daysOfMonth, selectedDate);
     }
 
@@ -56,28 +57,56 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             if (currentDay.getRed()) {
                 holder.redButton.setBackgroundColor(Color.RED);
             } else {
-                holder.redButton.setBackgroundColor(Color.WHITE);
+                holder.redButton.setBackgroundColor(Color.BLACK);
+            }
+            if (currentDay.getOrange()){
+                holder.orangeButton.setBackgroundColor(Color.rgb(255, 165, 0));
+            } else {
+                holder.orangeButton.setBackgroundColor(Color.BLACK);
+            }
+            if (currentDay.getYellow()){
+                holder.yellowButton.setBackgroundColor(Color.YELLOW);
+            } else {
+                holder.yellowButton.setBackgroundColor(Color.BLACK);
             }
         } else {
-            holder.redButton.setBackgroundColor(Color.WHITE);
+            holder.redButton.setBackgroundColor(Color.BLACK);
+            holder.orangeButton.setBackgroundColor(Color.BLACK);
+            holder.yellowButton.setBackgroundColor(Color.BLACK);
         }
         holder.cellDayText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String[] date = selectedDate.toString().split("-");
-                int month = Integer.valueOf(date[1]);
-                int year = Integer.valueOf(date[0]);
-                Calendar_cell currentDay = Utils.getInstance(view.getContext()).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
-                Log.d(TAG, "onClick: Red is " + currentDay.getRed());
-                if (currentDay.getRed() == false){
-                    currentDay.setRed(true);
-                    } else {
-                    Log.d(TAG, "onClick: Changing to false");
-                    currentDay.setRed(false);
+                if (view.getContext() instanceof MainActivity) {
+                    ArrayList<String> checkedBoxes = ((MainActivity)view.getContext()).selectedRadioButtons();
+                    if (checkedBoxes != null) {
+
+                        String[] date = selectedDate.toString().split("-");
+                        int month = Integer.valueOf(date[1]);
+                        int year = Integer.valueOf(date[0]);
+                        Calendar_cell currentDay = Utils.getInstance(view.getContext()).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
+
+                        if (checkedBoxes.contains("Red")){
+                            Boolean red = currentDay.getRed();
+                            currentDay.setRed(!red);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Orange")){
+                            Boolean orange = currentDay.getOrange();
+                            currentDay.setOrange(!orange);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Yellow")){
+                            Boolean yellow = currentDay.getYellow();
+                            currentDay.setYellow(!yellow);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
                     }
-                Log.d(TAG, "onClick: Red is " + currentDay.getRed());
-                Utils.getInstance(view.getContext()).editDay(currentDay);
-                notifyItemChanged(position);
+
+                }
             }
         });
         
@@ -86,13 +115,14 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
-        private Button redButton;
+        private Button redButton, orangeButton;
         private RelativeLayout colouredRecRelLayout;
         private TextView cellDayText;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             redButton = itemView.findViewById(R.id.redButton);
+            orangeButton = itemView.findViewById(R.id.orangeButton);
             colouredRecRelLayout = itemView.findViewById(R.id.colouredRecRelLayout);
             cellDayText = itemView.findViewById(R.id.cellDayText);
         }

@@ -49,28 +49,111 @@
 
     </LinearLayout>
 
-    <RadioGroup
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         >
 
-        <RadioButton
-            android:id="@+id/noneRadioBtn"
+        <CheckBox
+            android:id="@+id/redCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="None"
-            android:checked="true"
-            />
+            android:text="Red: " />
 
-        <RadioButton
-            android:id="@+id/redRadioBtn"
+        <EditText
+            android:id="@+id/redMeaningEditTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Red"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/redCheckBox"
+            android:hint="Red"
+            android:maxWidth="100dp"
+            android:minWidth="100dp"
+            android:textSize="15sp" />
+
+        <CheckBox
+            android:id="@+id/orangeCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Orange: "
+            android:layout_toRightOf="@id/redMeaningEditTxt"
             />
 
-    </RadioGroup>
+        <EditText
+            android:id="@+id/orangeMeaningEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Orange"
+            android:textSize="15sp"
+            android:minWidth="100dp"
+            android:maxWidth="100dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/orangeCheckBox"
+            />
+
+        <CheckBox
+            android:id="@+id/yellowCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Yellow: "
+            android:layout_below="@id/redCheckBox"
+            />
+
+        <EditText
+            android:id="@+id/yellowMeaningEditTxt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/redMeaningEditTxt"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/yellowCheckBox"
+            android:hint="Yellow"
+            android:maxWidth="100dp"
+            android:minWidth="100dp"
+            android:textSize="15sp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <Button
+            android:id="@+id/updateBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:layout_marginLeft="10dp"
+            />
+
+        <CheckBox
+            android:id="@+id/showRedCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/updateBtn"
+            android:text="R"
+            />
+
+        <CheckBox
+            android:id="@+id/showOrangeCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/showRedCheckBox"
+            android:text="O"
+            />
+
+        <CheckBox
+            android:id="@+id/showYellowCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/showOrangeCheckBox"
+            android:text="Y"
+            />
+
+    </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -3,6 +3,7 @@ package com.example.myibdtrackerappattempt2;
 import android.content.Context;
 import android.view.View;
 import android.widget.Button;
+import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     public final TextView dayOfMonth;
-    public Button redButton;
+    public Button redButton, orangeButton, yellowButton;
     public RelativeLayout colouredRecRelLayout;
     private final CalendarAdapter.OnItemListener onItemListener;
     public ArrayList<String> daysOfMonth;
@@ -26,8 +27,11 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
         super(itemView);
         dayOfMonth = itemView.findViewById(R.id.cellDayText);
         redButton = itemView.findViewById(R.id.redButton);
+        orangeButton = itemView.findViewById(R.id.orangeButton);
+        yellowButton = itemView.findViewById(R.id.yellowButton);
         colouredRecRelLayout = itemView.findViewById(R.id.colouredRecRelLayout);
         cellDayText = itemView.findViewById(R.id.cellDayText);
+
         this.daysOfMonth = daysOfMonth;
         this.onItemListener = onItemListener;
         this.selectedDate = selectedDate;

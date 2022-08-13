@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +27,10 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     private TextView monthYearText;
     private RecyclerView calendarRecView;
     private LocalDate selectedDate;
-    private Button btnPrev, btnNext;
-    private RadioButton noneRadioBtn, redRadioBtn;
+    private Button btnPrev, btnNext, updateBtn;
+    private CheckBox redCheckBox, orangeCheckBox, yellowCheckBox;
+    private CheckBox showRedCheckBox, showOrangeCheckBox, showYellowCheckBox;
+    private EditText redMeaningEditTxt, orangeMeaningEditTxt, yellowMeaningEditTxt;
     Context context;
 
     @Override
@@ -43,7 +47,6 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     private void setMonthView() {
         monthYearText.setText(monthYearFromDate(selectedDate));
         ArrayList<String> daysInMonth = daysInMonthArray(selectedDate);
-        ArrayList<Calendar_cell> cellDaysInMonth = new ArrayList<>();
         for (String d: daysInMonth) {
             if (!d.equals("")) {
                 int day = Integer.valueOf(d);
@@ -56,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 calendar_cell.setMonth(month);
                 calendar_cell.setYear(year);
                 Log.d(TAG, "setMonthView: About to get Utils");
-                Utils.getInstance(this).addDay(calendar_cell);
+                if (Utils.getInstance(this).addDay(calendar_cell).equals("old")){
+                    break;
+                }
             }
         }
 
@@ -93,8 +98,31 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         monthYearText = findViewById(R.id.monthYearTV);
         btnNext = findViewById(R.id.btnNext);
         btnPrev = findViewById(R.id.btnPrev);
-        noneRadioBtn = findViewById(R.id.noneRadioBtn);
-        redRadioBtn = findViewById(R.id.redRadioBtn);
+
+        redCheckBox = findViewById(R.id.redCheckBox);
+        redMeaningEditTxt = findViewById(R.id.redMeaningEditTxt);
+        updateBtn = findViewById(R.id.updateBtn);
+        orangeCheckBox = findViewById(R.id.orangeCheckBox);
+        orangeMeaningEditTxt = findViewById(R.id.orangeMeaningEditTxt);
+        yellowCheckBox = findViewById(R.id.yellowCheckBox);
+        yellowMeaningEditTxt = findViewById(R.id.yellowMeaningEditTxt);
+
+        showRedCheckBox = findViewById(R.id.showRedCheckBox);
+        showOrangeCheckBox = findViewById(R.id.showOrangeCheckBox);
+        showYellowCheckBox = findViewById(R.id.showYellowCheckBox);
+
+        redMeaningEditTxt.setText(Utils.getInstance(this).getKey().get(0));
+        orangeMeaningEditTxt.setText(Utils.getInstance(this).getKey().get(1));
+        yellowMeaningEditTxt.setText(Utils.getInstance(this).getKey().get(2));
+
+        updateBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Utils.getInstance(context).updateKey(0,redMeaningEditTxt.getText().toString());
+                Utils.getInstance(context).updateKey(1,orangeMeaningEditTxt.getText().toString());
+                Utils.getInstance(context).updateKey(2,yellowMeaningEditTxt.getText().toString());
+            }
+        });
 
         btnPrev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,5 +158,33 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
 //            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public ArrayList<String> selectedRadioButtons(){
+        ArrayList<String> toReturn = new ArrayList<>();
+        if (redCheckBox.isChecked()){
+           toReturn.add("Red");
+        }
+        if (orangeCheckBox.isChecked()){
+            toReturn.add("Orange");
+        }
+        if (yellowCheckBox.isChecked()){
+            toReturn.add("Yellow");
+        }
+        return toReturn;
+    }
+
+    public ArrayList<String> selectedCheckButtonsToShow(){
+        ArrayList<String> toReturn = new ArrayList<>();
+        if (showRedCheckBox.isChecked()){
+            toReturn.add("Red");
+        }
+        if (showOrangeCheckBox.isChecked()){
+            toReturn.add("Orange");
+        }
+        if (showYellowCheckBox.isChecked()){
+            toReturn.add("Yellow");
+        }
+        return toReturn;
     }
 }

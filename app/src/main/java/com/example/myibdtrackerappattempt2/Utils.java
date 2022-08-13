@@ -16,6 +16,7 @@ public class Utils {
     private static final String TAG = "Utils";
 
     private static final String DAYS_KEY = "days_key";
+    private static final String KEY_KEY = "key_key";
     private static Utils instance;
     private SharedPreferences sharedPreferences;
 
@@ -42,6 +43,19 @@ public class Utils {
             Log.d(TAG, "Utils: Before commit");
             editor.commit();
         }
+
+        if (null == getKey()){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor = sharedPreferences.edit();
+            Gson gson = new Gson();
+            gson = new Gson();
+            ArrayList<String> key = new ArrayList<>();
+            for (int i = 0; i < 8; i++){
+                key.add("Fill in");
+            }
+            editor.putString(KEY_KEY, gson.toJson(key));
+            editor.commit();
+        }
     }
 
     public static synchronized Utils getInstance(Context context) {
@@ -60,6 +74,24 @@ public class Utils {
         Log.d(TAG, "getDays: After Type");
         ArrayList<Calendar_cell> days = gson.fromJson(sharedPreferences.getString(DAYS_KEY, null), type);
         return days;
+    }
+
+    public ArrayList<String> getKey() {
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<String>>() {}.getType();
+        Log.d(TAG, "getDays: After Type");
+        ArrayList<String> key = gson.fromJson(sharedPreferences.getString(KEY_KEY, null), type);
+        return key;
+    }
+
+    public void updateKey(int position, String text) {
+        ArrayList<String> key = getKey();
+        key.set(position, text);
+        Gson gson = new Gson();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        gson = new Gson();
+        editor.putString(KEY_KEY, gson.toJson(key));
+        editor.commit();
     }
 
     public Calendar_cell getDay(int day, int month, int year) {
@@ -94,7 +126,7 @@ public class Utils {
         return toReturn;
     }
 
-    public void addDay(Calendar_cell day) {
+    public String addDay(Calendar_cell day) {
         if (getDay(day.getDay(),day.getMonth(),day.getYear()) == null) {
             Log.d(TAG, "addDay: Adding");
             Gson gson = new Gson();
@@ -108,6 +140,9 @@ public class Utils {
             gson = new Gson();
             editor.putString(DAYS_KEY, gson.toJson(newDays));
             editor.commit();
+            return("new");
+        } else {
+            return("old");
         }
     }
 

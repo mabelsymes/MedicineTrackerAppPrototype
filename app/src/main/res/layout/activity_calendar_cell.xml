@@ -10,9 +10,8 @@
         android:id="@+id/cellDayText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="15sp"
-        android:layout_marginTop="10dp"
+        android:textSize="25sp"
+        android:layout_marginTop="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,11 +26,35 @@
         >
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
             android:id="@+id/redButton"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
             android:backgroundTint="@color/red"
+            android:minHeight="0dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
             />
+
+        <Button
+            android:id="@+id/orangeButton"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/redButton"
+            android:backgroundTint="@color/orange"
+            android:insetTop="0dp"
+            android:background="@null"
+            android:stateListAnimator="@null"
+            android:insetBottom="0dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:id="@+id/yellowButton"
+            android:layout_below="@id/orangeButton"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:backgroundTint="@color/yellow"
+          />
 
     </RelativeLayout>
 
