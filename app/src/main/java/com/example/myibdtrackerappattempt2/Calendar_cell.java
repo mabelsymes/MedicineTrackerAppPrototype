@@ -22,13 +22,13 @@ public class Calendar_cell {
     private Button redButton;
     private TextView cellDayText;
 
-    public Calendar_cell(){
-        this.isRed = false;
-        this.isOrange = false;
-        this.isYellow = false;
-        this.day = 0;
-        this.month = 0;
-        this.year = 0;
+    public Calendar_cell(int day, int month, int year, boolean isRed, boolean isOrange, boolean isYellow){
+        this.isRed = isRed;
+        this.isOrange = isOrange;
+        this.isYellow = isYellow;
+        this.day = day;
+        this.month = month;
+        this.year = year;
     }
 
     public Boolean getYellow() {

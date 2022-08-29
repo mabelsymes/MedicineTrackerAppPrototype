@@ -19,6 +19,7 @@ import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements CalendarAdapter.OnItemListener{
 
@@ -54,17 +55,16 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 int month = Integer.valueOf(date[1]);
                 int year = Integer.valueOf(date[0]);
                 Log.d(TAG, "setMonthView: Yoooo The date is " + day + month + year);
-                Calendar_cell calendar_cell = new Calendar_cell();
-                calendar_cell.setDay(day);
-                calendar_cell.setMonth(month);
-                calendar_cell.setYear(year);
+                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, false,false, false);
+
+                // TODO ADD TO SQLITE DATABASE
                 Log.d(TAG, "setMonthView: About to get Utils");
                 if (Utils.getInstance(this).addDay(calendar_cell).equals("old")){
                     break;
                 }
             }
         }
-
+        Log.d(TAG, "setMonthView: qwerty");
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this, selectedDate);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecView.setLayoutManager(layoutManager);
@@ -121,6 +121,8 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 Utils.getInstance(context).updateKey(0,redMeaningEditTxt.getText().toString());
                 Utils.getInstance(context).updateKey(1,orangeMeaningEditTxt.getText().toString());
                 Utils.getInstance(context).updateKey(2,yellowMeaningEditTxt.getText().toString());
+                setMonthView();
+                Log.d(TAG, "onClick: SET MONTH VIEW COMPLETE");
             }
         });
 

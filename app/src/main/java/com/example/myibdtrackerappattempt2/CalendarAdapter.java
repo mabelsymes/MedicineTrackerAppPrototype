@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
 
@@ -43,17 +44,24 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         View view = inflater.inflate(R.layout.activity_calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
         layoutParams.height = (int)(parent.getHeight() * 0.2);
+        calAdapContext = parent.getContext();
         return new CalendarViewHolder(view, onItemListener, daysOfMonth, selectedDate);
     }
 
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
+
         holder.dayOfMonth.setText(daysOfMonth.get(position));
+
+        // SETTING THE COLOUR OF BUTTONS
         if (!daysOfMonth.get(position).equals("")){
             String[] date = selectedDate.toString().split("-");
             int month = Integer.valueOf(date[1]);
             int year = Integer.valueOf(date[0]);
+            Log.d(TAG, "onBindViewHolder: Month is " + month);
+            Log.d(TAG, "onBindViewHolder: Getting the day");
             Calendar_cell currentDay = Utils.getInstance(calAdapContext).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
+            Log.d(TAG, "onBindViewHolder: Red value is " + currentDay.getRed());
             if (currentDay.getRed()) {
                 holder.redButton.setBackgroundColor(Color.RED);
             } else {
@@ -74,6 +82,38 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             holder.orangeButton.setBackgroundColor(Color.BLACK);
             holder.yellowButton.setBackgroundColor(Color.BLACK);
         }
+
+        // SETTING THE HEIGHT OF BUTTONS
+
+        ArrayList<String> btnsToShow = new ArrayList<>();
+        if (calAdapContext instanceof MainActivity) {
+            btnsToShow = ((MainActivity)calAdapContext).selectedCheckButtonsToShow();
+        }
+        for (String s: btnsToShow){
+            Log.d(TAG, "onBindViewHolder: This is selected: " + s);
+        }
+        Log.d(TAG, "onBindViewHolder: Size: " + btnsToShow.size());
+        if (btnsToShow.size() != 0){
+            int height = 60/btnsToShow.size();
+            Log.d(TAG, "onBindViewHolder: Height is... " + height);
+            if (btnsToShow.contains("Red")) {
+                holder.redButton.setHeight(height);
+            } else {
+                holder.redButton.setHeight(5);
+            }
+            if (btnsToShow.contains("Orange")) {
+                holder.orangeButton.setHeight(height);
+            } else {
+                holder.orangeButton.setHeight(5);
+            }
+            if (btnsToShow.contains("Yellow")) {
+                holder.yellowButton.setHeight(height);
+            } else {
+                holder.yellowButton.setHeight(5);
+            }
+        }
+
+        // IF DAY IS PRESSED
         holder.cellDayText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
