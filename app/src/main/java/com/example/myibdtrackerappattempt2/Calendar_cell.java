@@ -17,15 +17,16 @@ public class Calendar_cell {
     private static final String TAG = "Calendar_cell";
 
     private int day = 0, month = 0, year = 0;
-    private Boolean isRed, isOrange, isYellow;
+    private Boolean isRed, isOrange, isYellow, isGreen;
     private Context Cal_cellContext;
     private Button redButton;
     private TextView cellDayText;
 
-    public Calendar_cell(int day, int month, int year, boolean isRed, boolean isOrange, boolean isYellow){
+    public Calendar_cell(int day, int month, int year, boolean isRed, boolean isOrange, boolean isYellow, boolean isGreen){
         this.isRed = isRed;
         this.isOrange = isOrange;
         this.isYellow = isYellow;
+        this.isGreen = isGreen;
         this.day = day;
         this.month = month;
         this.year = year;

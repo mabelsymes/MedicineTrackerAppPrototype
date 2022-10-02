@@ -24,6 +24,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ISRED = "COLUMN_ISRED";
     public static final String COLUMN_ISORANGE = "COLUMN_ISORANGE";
     public static final String COLUMN_ISYELLOW = "COLUMN_ISYELLOW";
+    private static final String COLUMN_ISGREEN = "COLUMN_ISGREEN";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "ibdTrackerInfo.db", null, 1);
@@ -32,13 +33,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // Runs first time this is called
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + CUSTOMER_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DATE + " TEXT, " + COLUMN_ISRED + " BOOL, " + COLUMN_ISORANGE + " BOOL, " + COLUMN_ISYELLOW + " BOOL)";
+        String createTableStatement = "CREATE TABLE " + CUSTOMER_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DATE + " TEXT, " + COLUMN_ISRED + " BOOL, " + COLUMN_ISORANGE + " BOOL, " + COLUMN_ISYELLOW + " BOOL, " + COLUMN_ISGREEN + " BOOL)";
         db.execSQL(createTableStatement);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
-
     }
 
     public void addOne(Calendar_cell calendar_cell) {
@@ -79,8 +79,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 boolean isRed = cursor.getInt(2) == 1 ? true: false;
                 boolean isOrange = cursor.getInt(3) == 1 ? true: false;
                 boolean isYellow = cursor.getInt(4) == 1 ? true: false;
+                boolean isGreen = cursor.getInt(5) == 1 ? true: false;
 
-                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, isRed, isOrange, isYellow);
+                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, isRed, isOrange, isYellow, isGreen);
                 returnList.add(calendar_cell);
 
             } while (cursor.moveToNext());

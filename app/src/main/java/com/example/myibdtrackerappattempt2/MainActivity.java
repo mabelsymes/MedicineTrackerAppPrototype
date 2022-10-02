@@ -15,6 +15,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 int month = Integer.valueOf(date[1]);
                 int year = Integer.valueOf(date[0]);
                 Log.d(TAG, "setMonthView: Yoooo The date is " + day + month + year);
-                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, false,false, false);
+                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, false,false, false, false);
 
                 // TODO ADD TO SQLITE DATABASE
                 Log.d(TAG, "setMonthView: About to get Utils");
@@ -111,9 +112,16 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         showOrangeCheckBox = findViewById(R.id.showOrangeCheckBox);
         showYellowCheckBox = findViewById(R.id.showYellowCheckBox);
 
-        redMeaningEditTxt.setText(Utils.getInstance(this).getKey().get(0));
-        orangeMeaningEditTxt.setText(Utils.getInstance(this).getKey().get(1));
-        yellowMeaningEditTxt.setText(Utils.getInstance(this).getKey().get(2));
+        ArrayList<String> keys = Utils.getInstance(this).getKey();
+        redMeaningEditTxt.setText(keys.get(0));
+        orangeMeaningEditTxt.setText(keys.get(1));
+        yellowMeaningEditTxt.setText(keys.get(2));
+
+        ArrayList<Boolean> show = Utils.getInstance(this).getShow();
+        Log.d(TAG, "initWidgets: showRedCheckBox is set to " + show.get(0));
+        showRedCheckBox.setChecked(show.get(0));
+        showOrangeCheckBox.setChecked(show.get(1));
+        showYellowCheckBox.setChecked(show.get(2));
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +129,12 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 Utils.getInstance(context).updateKey(0,redMeaningEditTxt.getText().toString());
                 Utils.getInstance(context).updateKey(1,orangeMeaningEditTxt.getText().toString());
                 Utils.getInstance(context).updateKey(2,yellowMeaningEditTxt.getText().toString());
+
+                Utils.getInstance(context).updateShow(0,showRedCheckBox.isChecked());
+                Log.d(TAG, "onClick: showRedCheckBox is " + showRedCheckBox.isChecked());
+                Utils.getInstance(context).updateShow(1,showOrangeCheckBox.isChecked());
+                Utils.getInstance(context).updateShow(2,showYellowCheckBox.isChecked());
+
                 setMonthView();
                 Log.d(TAG, "onClick: SET MONTH VIEW COMPLETE");
             }

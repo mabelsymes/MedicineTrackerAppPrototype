@@ -28,7 +28,7 @@
         <Button
             android:id="@+id/redButton"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="10dp"
             android:backgroundTint="@color/red"
             android:minHeight="0dp"
             android:insetTop="0dp"
@@ -38,7 +38,7 @@
         <Button
             android:id="@+id/orangeButton"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="10dp"
             android:layout_below="@id/redButton"
             android:backgroundTint="@color/orange"
             android:insetTop="0dp"
@@ -48,13 +48,23 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:layout_height="10dp"
             android:id="@+id/yellowButton"
             android:layout_below="@id/orangeButton"
             android:insetTop="0dp"
             android:insetBottom="0dp"
             android:backgroundTint="@color/yellow"
           />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="10dp"
+            android:id="@+id/greenButton"
+            android:layout_below="@id/yellowButton"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:backgroundTint="#4FC654"
+            />
 
     </RelativeLayout>
 

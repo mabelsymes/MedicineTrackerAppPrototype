@@ -16,7 +16,7 @@ import java.util.ArrayList;
 public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
     public final TextView dayOfMonth;
-    public Button redButton, orangeButton, yellowButton;
+    public Button redButton, orangeButton, yellowButton, greenButton;
     public RelativeLayout colouredRecRelLayout;
     private final CalendarAdapter.OnItemListener onItemListener;
     public ArrayList<String> daysOfMonth;
@@ -29,6 +29,7 @@ public class CalendarViewHolder extends RecyclerView.ViewHolder implements View.
         redButton = itemView.findViewById(R.id.redButton);
         orangeButton = itemView.findViewById(R.id.orangeButton);
         yellowButton = itemView.findViewById(R.id.yellowButton);
+        greenButton = itemView.findViewById(R.id.greenButton);
         colouredRecRelLayout = itemView.findViewById(R.id.colouredRecRelLayout);
         cellDayText = itemView.findViewById(R.id.cellDayText);
 

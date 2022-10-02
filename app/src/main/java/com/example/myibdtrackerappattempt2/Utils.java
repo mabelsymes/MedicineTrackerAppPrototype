@@ -18,6 +18,7 @@ public class Utils {
 
 //    private static final String DAYS_KEY = "days_key";
     private static final String KEY_KEY = "key_key";
+    private static final String SHOW_KEY = "show_key";
     private static Utils instance;
     private SharedPreferences sharedPreferences;
     private Context utilsContext;
@@ -51,12 +52,23 @@ public class Utils {
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor = sharedPreferences.edit();
             Gson gson = new Gson();
-            gson = new Gson();
             ArrayList<String> key = new ArrayList<>();
             for (int i = 0; i < 8; i++){
                 key.add("Fill in");
             }
             editor.putString(KEY_KEY, gson.toJson(key));
+            editor.commit();
+        }
+
+        if (null == getShow()){
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor = sharedPreferences.edit();
+            Gson gson  = new Gson();
+            ArrayList<Boolean> show = new ArrayList<>();
+            for (int i=0; i<8; i++){
+                show.add(false);
+            }
+            editor.putString(SHOW_KEY, gson.toJson(show));
             editor.commit();
         }
     }
@@ -92,6 +104,13 @@ public class Utils {
         ArrayList<String> key = gson.fromJson(sharedPreferences.getString(KEY_KEY, null), type);
         return key;
     }
+
+    public ArrayList<Boolean> getShow(){
+        Gson gson = new Gson();
+        Type type = new TypeToken<ArrayList<Boolean>>() {}.getType();
+        ArrayList<Boolean> show = gson.fromJson(sharedPreferences.getString(SHOW_KEY, null), type);
+        return show;
+    }
 //
     public void updateKey(int position, String text) {
         ArrayList<String> key = getKey();
@@ -103,9 +122,19 @@ public class Utils {
         editor.commit();
     }
 
+    public void updateShow(int position, Boolean b){
+        ArrayList<Boolean> show = getShow();
+        show.set(position, b);
+        Gson gson = new Gson();
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        gson = new Gson();
+        editor.putString(SHOW_KEY, gson.toJson(show));
+        editor.commit();
+    }
+
     public Calendar_cell getDay(int day, int month, int year) {
         ArrayList<Calendar_cell> days = getDays();
-        Calendar_cell toReturn = new Calendar_cell(0,0,0,false,false,false);
+        Calendar_cell toReturn = new Calendar_cell(0,0,0,false,false,false, false);
         if (null != days) {
             Log.d(TAG, "getDay: NOT NULL");
             for (Calendar_cell c: days){

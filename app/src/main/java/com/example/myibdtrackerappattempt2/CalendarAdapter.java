@@ -63,28 +63,27 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             Calendar_cell currentDay = Utils.getInstance(calAdapContext).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
             Log.d(TAG, "onBindViewHolder: Red value is " + currentDay.getRed());
             if (currentDay.getRed()) {
-                holder.redButton.setBackgroundColor(Color.RED);
+                holder.redButton.setVisibility(View.VISIBLE);
             } else {
-                holder.redButton.setBackgroundColor(Color.BLACK);
+                holder.redButton.setVisibility(View.INVISIBLE);
             }
             if (currentDay.getOrange()){
-                holder.orangeButton.setBackgroundColor(Color.rgb(255, 165, 0));
+                holder.orangeButton.setVisibility(View.VISIBLE);
             } else {
-                holder.orangeButton.setBackgroundColor(Color.BLACK);
+                holder.orangeButton.setVisibility(View.INVISIBLE);
             }
             if (currentDay.getYellow()){
-                holder.yellowButton.setBackgroundColor(Color.YELLOW);
+                holder.yellowButton.setVisibility(View.VISIBLE);
             } else {
-                holder.yellowButton.setBackgroundColor(Color.BLACK);
+                holder.yellowButton.setVisibility(View.INVISIBLE);
             }
         } else {
-            holder.redButton.setBackgroundColor(Color.BLACK);
-            holder.orangeButton.setBackgroundColor(Color.BLACK);
-            holder.yellowButton.setBackgroundColor(Color.BLACK);
+            holder.redButton.setVisibility(View.INVISIBLE);
+            holder.orangeButton.setVisibility(View.INVISIBLE);
+            holder.yellowButton.setVisibility(View.INVISIBLE);
         }
 
-        // SETTING THE HEIGHT OF BUTTONS
-
+        // SETTING VISIBILTY OF BUTTONS
         ArrayList<String> btnsToShow = new ArrayList<>();
         if (calAdapContext instanceof MainActivity) {
             btnsToShow = ((MainActivity)calAdapContext).selectedCheckButtonsToShow();
@@ -94,22 +93,20 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         }
         Log.d(TAG, "onBindViewHolder: Size: " + btnsToShow.size());
         if (btnsToShow.size() != 0){
-            int height = 60/btnsToShow.size();
-            Log.d(TAG, "onBindViewHolder: Height is... " + height);
             if (btnsToShow.contains("Red")) {
-                holder.redButton.setHeight(height);
+                holder.redButton.setVisibility(View.VISIBLE);
             } else {
-                holder.redButton.setHeight(5);
+                holder.redButton.setVisibility(View.INVISIBLE);
             }
             if (btnsToShow.contains("Orange")) {
-                holder.orangeButton.setHeight(height);
+                holder.orangeButton.setVisibility(View.VISIBLE);
             } else {
-                holder.orangeButton.setHeight(5);
+                holder.orangeButton.setVisibility(View.INVISIBLE);
             }
             if (btnsToShow.contains("Yellow")) {
-                holder.yellowButton.setHeight(height);
+                holder.yellowButton.setVisibility(View.VISIBLE);
             } else {
-                holder.yellowButton.setHeight(5);
+                holder.yellowButton.setVisibility(View.INVISIBLE);
             }
         }
 
