@@ -30,9 +30,9 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     private RecyclerView calendarRecView;
     private LocalDate selectedDate;
     private Button btnPrev, btnNext, updateBtn;
-    private CheckBox redCheckBox, orangeCheckBox, yellowCheckBox;
-    private CheckBox showRedCheckBox, showOrangeCheckBox, showYellowCheckBox;
-    private EditText redMeaningEditTxt, orangeMeaningEditTxt, yellowMeaningEditTxt;
+    private CheckBox redCheckBox, orangeCheckBox, yellowCheckBox, greenCheckBox, blueCheckBox, purpleCheckBox, pinkCheckBox, whiteCheckBox;
+    private CheckBox showRedCheckBox, showOrangeCheckBox, showYellowCheckBox, showGreenCheckBox, showBlueCheckBox, showPurpleCheckBox, showPinkCheckBox, showWhiteCheckBox;
+    private EditText redMeaningEditTxt, orangeMeaningEditTxt, yellowMeaningEditTxt, greenMeaningEditTxt, blueMeaningEditTxt, purpleMeaningEditTxt, pinkMeaningEditTxt, whiteMeaningEditTxt;
     Context context;
 
     @Override
@@ -56,9 +56,8 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 int month = Integer.valueOf(date[1]);
                 int year = Integer.valueOf(date[0]);
                 Log.d(TAG, "setMonthView: Yoooo The date is " + day + month + year);
-                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, false,false, false, false);
+                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, false,false, false, false, false, false, false, false);
 
-                // TODO ADD TO SQLITE DATABASE
                 Log.d(TAG, "setMonthView: About to get Utils");
                 if (Utils.getInstance(this).addDay(calendar_cell).equals("old")){
                     break;
@@ -107,21 +106,46 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         orangeMeaningEditTxt = findViewById(R.id.orangeMeaningEditTxt);
         yellowCheckBox = findViewById(R.id.yellowCheckBox);
         yellowMeaningEditTxt = findViewById(R.id.yellowMeaningEditTxt);
+        greenCheckBox = findViewById(R.id.greenCheckBox);
+        greenMeaningEditTxt = findViewById(R.id.greenMeaningEditTxt);
+        blueCheckBox = findViewById(R.id.blueCheckBox);
+        blueMeaningEditTxt = findViewById(R.id.blueMeaningEditTxt);
+        purpleCheckBox = findViewById(R.id.purpleCheckBox);
+        purpleMeaningEditTxt = findViewById(R.id.purpleMeaningEditTxt);
+        pinkCheckBox = findViewById(R.id.pinkCheckBox);
+        pinkMeaningEditTxt = findViewById(R.id.pinkMeaningEditTxt);
+        whiteCheckBox = findViewById(R.id.whiteCheckBox);
+        whiteMeaningEditTxt = findViewById(R.id.whiteMeaningEditTxt);
 
         showRedCheckBox = findViewById(R.id.showRedCheckBox);
         showOrangeCheckBox = findViewById(R.id.showOrangeCheckBox);
         showYellowCheckBox = findViewById(R.id.showYellowCheckBox);
+        showGreenCheckBox = findViewById(R.id.showGreenCheckBox);
+        showBlueCheckBox = findViewById(R.id.showBlueCheckBox);
+        showPurpleCheckBox = findViewById(R.id.showPurpleCheckBox);
+        showPinkCheckBox = findViewById(R.id.showPinkCheckBox);
+        showWhiteCheckBox = findViewById(R.id.showWhiteCheckBox);
 
         ArrayList<String> keys = Utils.getInstance(this).getKey();
         redMeaningEditTxt.setText(keys.get(0));
         orangeMeaningEditTxt.setText(keys.get(1));
         yellowMeaningEditTxt.setText(keys.get(2));
+        greenMeaningEditTxt.setText(keys.get(3));
+        blueMeaningEditTxt.setText(keys.get(4));
+        purpleMeaningEditTxt.setText(keys.get(5));
+        pinkMeaningEditTxt.setText(keys.get(6));
+        whiteMeaningEditTxt.setText(keys.get(7));
 
         ArrayList<Boolean> show = Utils.getInstance(this).getShow();
         Log.d(TAG, "initWidgets: showRedCheckBox is set to " + show.get(0));
         showRedCheckBox.setChecked(show.get(0));
         showOrangeCheckBox.setChecked(show.get(1));
         showYellowCheckBox.setChecked(show.get(2));
+        showGreenCheckBox.setChecked(show.get(3));
+        showBlueCheckBox.setChecked(show.get(4));
+        showPurpleCheckBox.setChecked(show.get(5));
+        showPinkCheckBox.setChecked(show.get(6));
+        showWhiteCheckBox.setChecked(show.get(7));
 
         updateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,11 +153,21 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 Utils.getInstance(context).updateKey(0,redMeaningEditTxt.getText().toString());
                 Utils.getInstance(context).updateKey(1,orangeMeaningEditTxt.getText().toString());
                 Utils.getInstance(context).updateKey(2,yellowMeaningEditTxt.getText().toString());
+                Utils.getInstance(context).updateKey(3,greenMeaningEditTxt.getText().toString());
+                Utils.getInstance(context).updateKey(4,blueMeaningEditTxt.getText().toString());
+                Utils.getInstance(context).updateKey(5,purpleMeaningEditTxt.getText().toString());
+                Utils.getInstance(context).updateKey(6,pinkMeaningEditTxt.getText().toString());
+                Utils.getInstance(context).updateKey(7,whiteMeaningEditTxt.getText().toString());
 
                 Utils.getInstance(context).updateShow(0,showRedCheckBox.isChecked());
                 Log.d(TAG, "onClick: showRedCheckBox is " + showRedCheckBox.isChecked());
                 Utils.getInstance(context).updateShow(1,showOrangeCheckBox.isChecked());
                 Utils.getInstance(context).updateShow(2,showYellowCheckBox.isChecked());
+                Utils.getInstance(context).updateShow(3,showGreenCheckBox.isChecked());
+                Utils.getInstance(context).updateShow(4,showBlueCheckBox.isChecked());
+                Utils.getInstance(context).updateShow(5,showPurpleCheckBox.isChecked());
+                Utils.getInstance(context).updateShow(6,showPinkCheckBox.isChecked());
+                Utils.getInstance(context).updateShow(7,showWhiteCheckBox.isChecked());
 
                 setMonthView();
                 Log.d(TAG, "onClick: SET MONTH VIEW COMPLETE");
@@ -187,6 +221,21 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         if (yellowCheckBox.isChecked()){
             toReturn.add("Yellow");
         }
+        if (greenCheckBox.isChecked()){
+            toReturn.add("Green");
+        }
+        if (blueCheckBox.isChecked()){
+            toReturn.add("Blue");
+        }
+        if (purpleCheckBox.isChecked()){
+            toReturn.add("Purple");
+        }
+        if (pinkCheckBox.isChecked()){
+            toReturn.add("Pink");
+        }
+        if (whiteCheckBox.isChecked()){
+            toReturn.add("White");
+        }
         return toReturn;
     }
 
@@ -200,6 +249,21 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         }
         if (showYellowCheckBox.isChecked()){
             toReturn.add("Yellow");
+        }
+        if (showGreenCheckBox.isChecked()){
+            toReturn.add("Green");
+        }
+        if (showBlueCheckBox.isChecked()){
+            toReturn.add("Blue");
+        }
+        if (showPurpleCheckBox.isChecked()){
+            toReturn.add("Purple");
+        }
+        if (showPinkCheckBox.isChecked()){
+            toReturn.add("Pink");
+        }
+        if (showWhiteCheckBox.isChecked()){
+            toReturn.add("White");
         }
         return toReturn;
     }

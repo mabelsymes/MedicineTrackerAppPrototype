@@ -43,7 +43,8 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.activity_calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = (int)(parent.getHeight() * 0.2);
+//        layoutParams.height = (int)(parent.getHeight()*0.24);
+        layoutParams.height = (int)(220);
         calAdapContext = parent.getContext();
         return new CalendarViewHolder(view, onItemListener, daysOfMonth, selectedDate);
     }
@@ -77,10 +78,40 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             } else {
                 holder.yellowButton.setVisibility(View.INVISIBLE);
             }
+            if (currentDay.getGreen()){
+                holder.greenButton.setVisibility(View.VISIBLE);
+            } else {
+                holder.greenButton.setVisibility(View.INVISIBLE);
+            }
+            if (currentDay.getBlue()){
+                holder.blueButton.setVisibility(View.VISIBLE);
+            } else {
+                holder.blueButton.setVisibility(View.INVISIBLE);
+            }
+            if (currentDay.getPurple()){
+                holder.purpleButton.setVisibility(View.VISIBLE);
+            } else {
+                holder.purpleButton.setVisibility(View.INVISIBLE);
+            }
+            if (currentDay.getPink()){
+                holder.pinkButton.setVisibility(View.VISIBLE);
+            } else {
+                holder.pinkButton.setVisibility(View.INVISIBLE);
+            }
+            if (currentDay.getWhite()){
+                holder.whiteButton.setVisibility(View.VISIBLE);
+            } else {
+                holder.whiteButton.setVisibility(View.INVISIBLE);
+            }
         } else {
             holder.redButton.setVisibility(View.INVISIBLE);
             holder.orangeButton.setVisibility(View.INVISIBLE);
             holder.yellowButton.setVisibility(View.INVISIBLE);
+            holder.greenButton.setVisibility(View.INVISIBLE);
+            holder.blueButton.setVisibility(View.INVISIBLE);
+            holder.purpleButton.setVisibility(View.INVISIBLE);
+            holder.pinkButton.setVisibility(View.INVISIBLE);
+            holder.whiteButton.setVisibility(View.INVISIBLE);
         }
 
         // SETTING VISIBILTY OF BUTTONS
@@ -93,20 +124,29 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         }
         Log.d(TAG, "onBindViewHolder: Size: " + btnsToShow.size());
         if (btnsToShow.size() != 0){
-            if (btnsToShow.contains("Red")) {
-                holder.redButton.setVisibility(View.VISIBLE);
-            } else {
+            if (!btnsToShow.contains("Red")) {
                 holder.redButton.setVisibility(View.INVISIBLE);
             }
-            if (btnsToShow.contains("Orange")) {
-                holder.orangeButton.setVisibility(View.VISIBLE);
-            } else {
+            if (!btnsToShow.contains("Orange")) {
                 holder.orangeButton.setVisibility(View.INVISIBLE);
             }
-            if (btnsToShow.contains("Yellow")) {
-                holder.yellowButton.setVisibility(View.VISIBLE);
-            } else {
+            if (!btnsToShow.contains("Yellow")) {
                 holder.yellowButton.setVisibility(View.INVISIBLE);
+            }
+            if (!btnsToShow.contains("Green")) {
+                holder.greenButton.setVisibility(View.INVISIBLE);
+            }
+            if (!btnsToShow.contains("Blue")) {
+                holder.blueButton.setVisibility(View.INVISIBLE);
+            }
+            if (!btnsToShow.contains("Purple")) {
+                holder.purpleButton.setVisibility(View.INVISIBLE);
+            }
+            if (!btnsToShow.contains("Pink")) {
+                holder.pinkButton.setVisibility(View.INVISIBLE);
+            }
+            if (!btnsToShow.contains("White")) {
+                holder.whiteButton.setVisibility(View.INVISIBLE);
             }
         }
 
@@ -138,6 +178,41 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                         if (checkedBoxes.contains("Yellow")){
                             Boolean yellow = currentDay.getYellow();
                             currentDay.setYellow(!yellow);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Green")){
+                            Log.d(TAG, "onClick: CheckedBoxes contains Green");
+                            Boolean green = currentDay.getGreen();
+                            currentDay.setGreen(!green);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Blue")){
+                            Log.d(TAG, "onClick: CheckedBoxes contains Blue");
+                            Boolean blue = currentDay.getBlue();
+                            currentDay.setBlue(!blue);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Purple")){
+                            Log.d(TAG, "onClick: CheckedBoxes contains Purple");
+                            Boolean purple = currentDay.getPurple();
+                            currentDay.setPurple(!purple);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Pink")){
+                            Log.d(TAG, "onClick: CheckedBoxes contains Pink");
+                            Boolean pink = currentDay.getPink();
+                            currentDay.setPink(!pink);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("White")){
+                            Log.d(TAG, "onClick: CheckedBoxes contains White");
+                            Boolean white = currentDay.getWhite();
+                            currentDay.setWhite(!white);
                             Utils.getInstance(view.getContext()).editDay(currentDay);
                             notifyItemChanged(position);
                         }

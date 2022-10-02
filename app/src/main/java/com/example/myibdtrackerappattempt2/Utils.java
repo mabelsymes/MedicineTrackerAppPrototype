@@ -134,7 +134,7 @@ public class Utils {
 
     public Calendar_cell getDay(int day, int month, int year) {
         ArrayList<Calendar_cell> days = getDays();
-        Calendar_cell toReturn = new Calendar_cell(0,0,0,false,false,false, false);
+        Calendar_cell toReturn = new Calendar_cell(0,0,0,false,false,false, false, false, false, false, false);
         if (null != days) {
             Log.d(TAG, "getDay: NOT NULL");
             for (Calendar_cell c: days){

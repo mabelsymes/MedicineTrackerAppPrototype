@@ -25,6 +25,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_ISORANGE = "COLUMN_ISORANGE";
     public static final String COLUMN_ISYELLOW = "COLUMN_ISYELLOW";
     private static final String COLUMN_ISGREEN = "COLUMN_ISGREEN";
+    private static final String COLUMN_ISBLUE = "COLUMN_ISBLUE";
+    private static final String COLUMN_ISPURPLE = "COLUMN_ISPURPLE";
+    private static final String COLUMN_ISPINK = "COLUMN_ISPINK";
+    private static final String COLUMN_ISWHITE = "COLUMN_ISWHITE";
 
     public DataBaseHelper(@Nullable Context context) {
         super(context, "ibdTrackerInfo.db", null, 1);
@@ -33,7 +37,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     // Runs first time this is called
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTableStatement = "CREATE TABLE " + CUSTOMER_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DATE + " TEXT, " + COLUMN_ISRED + " BOOL, " + COLUMN_ISORANGE + " BOOL, " + COLUMN_ISYELLOW + " BOOL, " + COLUMN_ISGREEN + " BOOL)";
+        String createTableStatement = "CREATE TABLE " + CUSTOMER_TABLE + " (ID INTEGER PRIMARY KEY AUTOINCREMENT, " + COLUMN_DATE + " TEXT, " + COLUMN_ISRED + " BOOL, " + COLUMN_ISORANGE + " BOOL, " + COLUMN_ISYELLOW + " BOOL, " + COLUMN_ISGREEN + " BOOL, " + COLUMN_ISBLUE + " BOOL, " + COLUMN_ISPURPLE + " BOOL, " + COLUMN_ISPINK + " BOOL, " + COLUMN_ISWHITE + " BOOL)";
         db.execSQL(createTableStatement);
     }
 
@@ -49,6 +53,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_ISRED, calendar_cell.getRed());
         cv.put(COLUMN_ISORANGE, calendar_cell.getOrange());
         cv.put(COLUMN_ISYELLOW, calendar_cell.getYellow());
+        cv.put(COLUMN_ISGREEN, calendar_cell.getGreen());
+        cv.put(COLUMN_ISBLUE, calendar_cell.getBlue());
+        cv.put(COLUMN_ISPURPLE, calendar_cell.getPurple());
+        cv.put(COLUMN_ISPINK, calendar_cell.getPink());
+        cv.put(COLUMN_ISWHITE, calendar_cell.getWhite());
 
         Log.d(TAG, "addOne: About to insert");
         db.insert(CUSTOMER_TABLE,null,cv);
@@ -80,8 +89,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 boolean isOrange = cursor.getInt(3) == 1 ? true: false;
                 boolean isYellow = cursor.getInt(4) == 1 ? true: false;
                 boolean isGreen = cursor.getInt(5) == 1 ? true: false;
+                boolean isBlue = cursor.getInt(6) == 1 ? true: false;
+                boolean isPurple = cursor.getInt(7) == 1 ? true: false;
+                boolean isPink = cursor.getInt(8) == 1 ? true: false;
+                boolean isWhite = cursor.getInt(9) == 1 ? true: false;
 
-                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, isRed, isOrange, isYellow, isGreen);
+                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, isRed, isOrange, isYellow, isGreen, isBlue, isPurple, isPink, isWhite);
                 returnList.add(calendar_cell);
 
             } while (cursor.moveToNext());
@@ -102,6 +115,11 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_ISRED, calendar_cell.getRed());
         cv.put(COLUMN_ISORANGE, calendar_cell.getOrange());
         cv.put(COLUMN_ISYELLOW, calendar_cell.getYellow());
+        cv.put(COLUMN_ISGREEN, calendar_cell.getGreen());
+        cv.put(COLUMN_ISBLUE, calendar_cell.getBlue());
+        cv.put(COLUMN_ISPURPLE, calendar_cell.getPurple());
+        cv.put(COLUMN_ISPINK, calendar_cell.getPink());
+        cv.put(COLUMN_ISWHITE, calendar_cell.getWhite());
         db.update(CUSTOMER_TABLE, cv, "COLUMN_DATE = ?", new String[] {date});
     }
 }

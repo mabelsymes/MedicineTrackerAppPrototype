@@ -28,7 +28,7 @@
         <Button
             android:id="@+id/redButton"
             android:layout_width="wrap_content"
-            android:layout_height="10dp"
+            android:layout_height="5dp"
             android:backgroundTint="@color/red"
             android:minHeight="0dp"
             android:insetTop="0dp"
@@ -38,7 +38,7 @@
         <Button
             android:id="@+id/orangeButton"
             android:layout_width="wrap_content"
-            android:layout_height="10dp"
+            android:layout_height="5dp"
             android:layout_below="@id/redButton"
             android:backgroundTint="@color/orange"
             android:insetTop="0dp"
@@ -48,7 +48,7 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="10dp"
+            android:layout_height="5dp"
             android:id="@+id/yellowButton"
             android:layout_below="@id/orangeButton"
             android:insetTop="0dp"
@@ -58,12 +58,52 @@
 
         <Button
             android:layout_width="wrap_content"
-            android:layout_height="10dp"
+            android:layout_height="5dp"
             android:id="@+id/greenButton"
             android:layout_below="@id/yellowButton"
             android:insetTop="0dp"
             android:insetBottom="0dp"
-            android:backgroundTint="#4FC654"
+            android:backgroundTint="@color/green"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="5dp"
+            android:id="@+id/blueButton"
+            android:layout_below="@id/greenButton"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:backgroundTint="@color/blue"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="5dp"
+            android:id="@+id/purpleButton"
+            android:layout_below="@id/blueButton"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:backgroundTint="@color/purple"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="5dp"
+            android:id="@+id/pinkButton"
+            android:layout_below="@id/purpleButton"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:backgroundTint="@color/pink"
+            />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="5dp"
+            android:id="@+id/whiteButton"
+            android:layout_below="@id/pinkButton"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:backgroundTint="#F6F3F6"
             />
 
     </RelativeLayout>
