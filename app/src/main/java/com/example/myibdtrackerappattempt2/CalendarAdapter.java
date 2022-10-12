@@ -62,7 +62,33 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             Log.d(TAG, "onBindViewHolder: yearView is true");
             yearView = true;
             Log.d(TAG, "onBindViewHolder: intDay is " + intDay);
-            holder.dayOfMonth.setText(String.valueOf(intDay-100));
+            int d = intDay-100;
+            if (d <= 2){
+                holder.dayOfMonth.setText("Jan");
+            } else if (d <= 4) {
+                holder.dayOfMonth.setText("Feb");
+            } else if (d <= 6) {
+                holder.dayOfMonth.setText("Mar");
+            } else if (d <= 8) {
+                holder.dayOfMonth.setText("Apr");
+            } else if (d <= 10) {
+                holder.dayOfMonth.setText("May");
+            } else if (d <= 13) {
+                holder.dayOfMonth.setText("Jun");
+            } else if (d <= 15) {
+                holder.dayOfMonth.setText("Jul");
+            } else if (d <= 17) {
+                holder.dayOfMonth.setText("Aug");
+            } else if (d <= 19) {
+                holder.dayOfMonth.setText("Sep");
+            } else if (d <= 21) {
+                holder.dayOfMonth.setText("Oct");
+            } else if (d <= 23) {
+                holder.dayOfMonth.setText("Nov");
+            } else if (d <= 26){
+                holder.dayOfMonth.setText("Dec");
+            }
+
         } else {
             holder.dayOfMonth.setText(day);
         }
