@@ -52,17 +52,40 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull CalendarViewHolder holder, int position) {
 
-        holder.dayOfMonth.setText(daysOfMonth.get(position));
+        String day = daysOfMonth.get(position);
+        Boolean yearView = false;
+        int intDay = 0;
+        if (!day.equals("")) {
+            intDay = Integer.valueOf(day);
+        }
+        if (intDay > 100){
+            Log.d(TAG, "onBindViewHolder: yearView is true");
+            yearView = true;
+            Log.d(TAG, "onBindViewHolder: intDay is " + intDay);
+            holder.dayOfMonth.setText(String.valueOf(intDay-100));
+        } else {
+            holder.dayOfMonth.setText(day);
+        }
+
+        final Boolean finalYearView = yearView;
 
         // SETTING THE COLOUR OF BUTTONS
         if (!daysOfMonth.get(position).equals("")){
             String[] date = selectedDate.toString().split("-");
-            int month = Integer.valueOf(date[1]);
+            int month = 1;
+            if (yearView){
+                month = 1;
+            } else {
+                month = Integer.valueOf(date[1]);
+            }
             int year = Integer.valueOf(date[0]);
+
             Log.d(TAG, "onBindViewHolder: Month is " + month);
+            Log.d(TAG, "onBindViewHolder: Year is " + year);
             Log.d(TAG, "onBindViewHolder: Getting the day");
-            Calendar_cell currentDay = Utils.getInstance(calAdapContext).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
+            Calendar_cell currentDay = Utils.getInstance(calAdapContext).getDay(intDay, month, year);
             Log.d(TAG, "onBindViewHolder: Red value is " + currentDay.getRed());
+
             if (currentDay.getRed()) {
                 holder.redButton.setVisibility(View.VISIBLE);
             } else {
@@ -155,66 +178,68 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             @Override
             public void onClick(View view) {
                 if (view.getContext() instanceof MainActivity) {
-                    ArrayList<String> checkedBoxes = ((MainActivity)view.getContext()).selectedRadioButtons();
-                    if (checkedBoxes != null) {
+                    if (!finalYearView) {
+                        ArrayList<String> checkedBoxes = ((MainActivity) view.getContext()).selectedRadioButtons();
+                        if (checkedBoxes != null) {
 
-                        String[] date = selectedDate.toString().split("-");
-                        int month = Integer.valueOf(date[1]);
-                        int year = Integer.valueOf(date[0]);
-                        Calendar_cell currentDay = Utils.getInstance(view.getContext()).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
+                            String[] date = selectedDate.toString().split("-");
+                            int month = Integer.valueOf(date[1]);
+                            int year = Integer.valueOf(date[0]);
+                            Calendar_cell currentDay = Utils.getInstance(view.getContext()).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
 
-                        if (checkedBoxes.contains("Red")){
-                            Boolean red = currentDay.getRed();
-                            currentDay.setRed(!red);
-                            Utils.getInstance(view.getContext()).editDay(currentDay);
-                            notifyItemChanged(position);
-                        }
-                        if (checkedBoxes.contains("Orange")){
-                            Boolean orange = currentDay.getOrange();
-                            currentDay.setOrange(!orange);
-                            Utils.getInstance(view.getContext()).editDay(currentDay);
-                            notifyItemChanged(position);
-                        }
-                        if (checkedBoxes.contains("Yellow")){
-                            Boolean yellow = currentDay.getYellow();
-                            currentDay.setYellow(!yellow);
-                            Utils.getInstance(view.getContext()).editDay(currentDay);
-                            notifyItemChanged(position);
-                        }
-                        if (checkedBoxes.contains("Green")){
-                            Log.d(TAG, "onClick: CheckedBoxes contains Green");
-                            Boolean green = currentDay.getGreen();
-                            currentDay.setGreen(!green);
-                            Utils.getInstance(view.getContext()).editDay(currentDay);
-                            notifyItemChanged(position);
-                        }
-                        if (checkedBoxes.contains("Blue")){
-                            Log.d(TAG, "onClick: CheckedBoxes contains Blue");
-                            Boolean blue = currentDay.getBlue();
-                            currentDay.setBlue(!blue);
-                            Utils.getInstance(view.getContext()).editDay(currentDay);
-                            notifyItemChanged(position);
-                        }
-                        if (checkedBoxes.contains("Purple")){
-                            Log.d(TAG, "onClick: CheckedBoxes contains Purple");
-                            Boolean purple = currentDay.getPurple();
-                            currentDay.setPurple(!purple);
-                            Utils.getInstance(view.getContext()).editDay(currentDay);
-                            notifyItemChanged(position);
-                        }
-                        if (checkedBoxes.contains("Pink")){
-                            Log.d(TAG, "onClick: CheckedBoxes contains Pink");
-                            Boolean pink = currentDay.getPink();
-                            currentDay.setPink(!pink);
-                            Utils.getInstance(view.getContext()).editDay(currentDay);
-                            notifyItemChanged(position);
-                        }
-                        if (checkedBoxes.contains("White")){
-                            Log.d(TAG, "onClick: CheckedBoxes contains White");
-                            Boolean white = currentDay.getWhite();
-                            currentDay.setWhite(!white);
-                            Utils.getInstance(view.getContext()).editDay(currentDay);
-                            notifyItemChanged(position);
+                            if (checkedBoxes.contains("Red")) {
+                                Boolean red = currentDay.getRed();
+                                currentDay.setRed(!red);
+                                Utils.getInstance(view.getContext()).editDay(currentDay);
+                                notifyItemChanged(position);
+                            }
+                            if (checkedBoxes.contains("Orange")) {
+                                Boolean orange = currentDay.getOrange();
+                                currentDay.setOrange(!orange);
+                                Utils.getInstance(view.getContext()).editDay(currentDay);
+                                notifyItemChanged(position);
+                            }
+                            if (checkedBoxes.contains("Yellow")) {
+                                Boolean yellow = currentDay.getYellow();
+                                currentDay.setYellow(!yellow);
+                                Utils.getInstance(view.getContext()).editDay(currentDay);
+                                notifyItemChanged(position);
+                            }
+                            if (checkedBoxes.contains("Green")) {
+                                Log.d(TAG, "onClick: CheckedBoxes contains Green");
+                                Boolean green = currentDay.getGreen();
+                                currentDay.setGreen(!green);
+                                Utils.getInstance(view.getContext()).editDay(currentDay);
+                                notifyItemChanged(position);
+                            }
+                            if (checkedBoxes.contains("Blue")) {
+                                Log.d(TAG, "onClick: CheckedBoxes contains Blue");
+                                Boolean blue = currentDay.getBlue();
+                                currentDay.setBlue(!blue);
+                                Utils.getInstance(view.getContext()).editDay(currentDay);
+                                notifyItemChanged(position);
+                            }
+                            if (checkedBoxes.contains("Purple")) {
+                                Log.d(TAG, "onClick: CheckedBoxes contains Purple");
+                                Boolean purple = currentDay.getPurple();
+                                currentDay.setPurple(!purple);
+                                Utils.getInstance(view.getContext()).editDay(currentDay);
+                                notifyItemChanged(position);
+                            }
+                            if (checkedBoxes.contains("Pink")) {
+                                Log.d(TAG, "onClick: CheckedBoxes contains Pink");
+                                Boolean pink = currentDay.getPink();
+                                currentDay.setPink(!pink);
+                                Utils.getInstance(view.getContext()).editDay(currentDay);
+                                notifyItemChanged(position);
+                            }
+                            if (checkedBoxes.contains("White")) {
+                                Log.d(TAG, "onClick: CheckedBoxes contains White");
+                                Boolean white = currentDay.getWhite();
+                                currentDay.setWhite(!white);
+                                Utils.getInstance(view.getContext()).editDay(currentDay);
+                                notifyItemChanged(position);
+                            }
                         }
                     }
 

@@ -54,6 +54,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginTop="5dp"
+        android:id="@+id/daysOfWeekLinLayout"
         >
 
         <TextView
@@ -406,14 +407,40 @@
 
         </RelativeLayout>
 
-        <Button
-            android:id="@+id/updateBtn"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Update"
             android:layout_below="@id/showButtonsRelLayout"
             android:layout_centerHorizontal="true"
-            />
+            >
+
+            <Button
+                android:id="@+id/updateBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Update"
+                android:layout_toRightOf="@+id/viewTypeBtn"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/viewTypeBtn"
+                android:text="YEAR VIEW"
+                android:layout_marginRight="10dp"
+                />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/goToCurrentDateBtn"
+                android:text="Current Date"
+                android:layout_toRightOf="@+id/updateBtn"
+                android:layout_marginLeft="10dp"
+                android:layout_centerVertical="true"
+                />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

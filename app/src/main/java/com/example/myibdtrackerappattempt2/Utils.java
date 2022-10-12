@@ -139,10 +139,9 @@ public class Utils {
             Log.d(TAG, "getDay: NOT NULL");
             for (Calendar_cell c: days){
                 if (c.getYear() == year) {
-                    Log.d(TAG, "getDay: Year is same");
                     if (c.getMonth() == month) {
-                        Log.d(TAG, "getDay: Month is same");
                         if (c.getDay() == day) {
+                            Log.d(TAG, "getDay: day has value: " + day);
                             Log.d(TAG, "getDay: c's red is " + c.getRed());
                             Log.d(TAG, "getDay: c's day is " + c.getDay());
                             int position = days.indexOf(c);
