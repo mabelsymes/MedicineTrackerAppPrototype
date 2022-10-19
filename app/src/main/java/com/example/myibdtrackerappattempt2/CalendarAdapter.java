@@ -69,9 +69,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                 holder.dayOfMonth.setText("Feb");
             } else if (d <= 6) {
                 holder.dayOfMonth.setText("Mar");
-            } else if (d <= 8) {
+            } else if (d <= 9) {
                 holder.dayOfMonth.setText("Apr");
-            } else if (d <= 10) {
+            } else if (d <= 11) {
                 holder.dayOfMonth.setText("May");
             } else if (d <= 13) {
                 holder.dayOfMonth.setText("Jun");
@@ -81,9 +81,9 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                 holder.dayOfMonth.setText("Aug");
             } else if (d <= 19) {
                 holder.dayOfMonth.setText("Sep");
-            } else if (d <= 21) {
+            } else if (d <= 22) {
                 holder.dayOfMonth.setText("Oct");
-            } else if (d <= 23) {
+            } else if (d <= 24) {
                 holder.dayOfMonth.setText("Nov");
             } else if (d <= 26){
                 holder.dayOfMonth.setText("Dec");
@@ -93,6 +93,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             holder.dayOfMonth.setText(day);
         }
 
+        final int integerDay = intDay;
         final Boolean finalYearView = yearView;
 
         // SETTING THE COLOUR OF BUTTONS
@@ -212,21 +213,40 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                             int month = Integer.valueOf(date[1]);
                             int year = Integer.valueOf(date[0]);
                             Calendar_cell currentDay = Utils.getInstance(view.getContext()).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
+                            Log.d(TAG, "onClick: FortnightNumber is " + currentDay.getFortnightNumber());
+
+                            ArrayList<String> toAdd = new ArrayList<>();
+                            ArrayList<String> toRemove = new ArrayList<>();
 
                             if (checkedBoxes.contains("Red")) {
                                 Boolean red = currentDay.getRed();
+                                if (Boolean.TRUE.equals(red)){
+                                    toRemove.add("Red");
+                                } else {
+                                    toAdd.add("Red");
+                                }
                                 currentDay.setRed(!red);
                                 Utils.getInstance(view.getContext()).editDay(currentDay);
                                 notifyItemChanged(position);
                             }
                             if (checkedBoxes.contains("Orange")) {
                                 Boolean orange = currentDay.getOrange();
+                                if (Boolean.TRUE.equals(orange)){
+                                    toRemove.add("Orange");
+                                } else {
+                                    toAdd.add("Orange");
+                                }
                                 currentDay.setOrange(!orange);
                                 Utils.getInstance(view.getContext()).editDay(currentDay);
                                 notifyItemChanged(position);
                             }
                             if (checkedBoxes.contains("Yellow")) {
                                 Boolean yellow = currentDay.getYellow();
+                                if (Boolean.TRUE.equals(yellow)){
+                                    toRemove.add("Yellow");
+                                } else {
+                                    toAdd.add("Yellow");
+                                }
                                 currentDay.setYellow(!yellow);
                                 Utils.getInstance(view.getContext()).editDay(currentDay);
                                 notifyItemChanged(position);
@@ -234,6 +254,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                             if (checkedBoxes.contains("Green")) {
                                 Log.d(TAG, "onClick: CheckedBoxes contains Green");
                                 Boolean green = currentDay.getGreen();
+                                if (Boolean.TRUE.equals(green)){
+                                    toRemove.add("Green");
+                                } else {
+                                    toAdd.add("Green");
+                                }
                                 currentDay.setGreen(!green);
                                 Utils.getInstance(view.getContext()).editDay(currentDay);
                                 notifyItemChanged(position);
@@ -241,6 +266,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                             if (checkedBoxes.contains("Blue")) {
                                 Log.d(TAG, "onClick: CheckedBoxes contains Blue");
                                 Boolean blue = currentDay.getBlue();
+                                if (Boolean.TRUE.equals(blue)){
+                                    toRemove.add("Blue");
+                                } else {
+                                    toAdd.add("Blue");
+                                }
                                 currentDay.setBlue(!blue);
                                 Utils.getInstance(view.getContext()).editDay(currentDay);
                                 notifyItemChanged(position);
@@ -248,6 +278,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                             if (checkedBoxes.contains("Purple")) {
                                 Log.d(TAG, "onClick: CheckedBoxes contains Purple");
                                 Boolean purple = currentDay.getPurple();
+                                if (Boolean.TRUE.equals(purple)){
+                                    toRemove.add("Purple");
+                                } else {
+                                    toAdd.add("Purple");
+                                }
                                 currentDay.setPurple(!purple);
                                 Utils.getInstance(view.getContext()).editDay(currentDay);
                                 notifyItemChanged(position);
@@ -255,6 +290,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                             if (checkedBoxes.contains("Pink")) {
                                 Log.d(TAG, "onClick: CheckedBoxes contains Pink");
                                 Boolean pink = currentDay.getPink();
+                                if (Boolean.TRUE.equals(pink)){
+                                    toRemove.add("Pink");
+                                } else {
+                                    toAdd.add("Pink");
+                                }
                                 currentDay.setPink(!pink);
                                 Utils.getInstance(view.getContext()).editDay(currentDay);
                                 notifyItemChanged(position);
@@ -262,10 +302,17 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
                             if (checkedBoxes.contains("White")) {
                                 Log.d(TAG, "onClick: CheckedBoxes contains White");
                                 Boolean white = currentDay.getWhite();
+                                if (Boolean.TRUE.equals(white)){
+                                    toRemove.add("White");
+                                } else {
+                                    toAdd.add("White");
+                                }
                                 currentDay.setWhite(!white);
                                 Utils.getInstance(view.getContext()).editDay(currentDay);
                                 notifyItemChanged(position);
                             }
+
+                            Utils.getInstance(calAdapContext).updateFortnight(integerDay, month, year, toAdd, toRemove);
                         }
                     }
 

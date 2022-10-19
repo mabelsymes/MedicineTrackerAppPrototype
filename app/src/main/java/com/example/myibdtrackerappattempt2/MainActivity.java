@@ -60,7 +60,8 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 int month = Integer.valueOf(date[1]);
                 int year = Integer.valueOf(date[0]);
                 Log.d(TAG, "setMonthView: Yoooo The date is " + day + month + year);
-                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, false,false, false, false, false, false, false, false);
+                int fortnightNumber = Utils.getInstance(this).getFortnightNumber(day, month, year);
+                Calendar_cell calendar_cell = new Calendar_cell(day, month, year, false,false, false, false, false, false, false, false, fortnightNumber, 0, 0, 0, 0, 0, 0, 0, 0);
 
                 Log.d(TAG, "setMonthView: About to get Utils");
                 if (Utils.getInstance(this).addDay(calendar_cell).equals("old")){
@@ -78,110 +79,14 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     private void setYearView(){
         monthYearText.setText(String.valueOf(selectedDate.getYear()));
         daysOfWeekLinLayout.setVisibility(View.INVISIBLE);
-        int y = selectedDate.getYear();
-        ArrayList<Calendar_cell> daysInYear = new ArrayList<>();
-        for (int m=1; m<=12; m++){
-            LocalDate startDate = LocalDate.of(y, m,1);
-            ArrayList<String> daysInMonth = daysInMonthArray(startDate);
-            for (String d: daysInMonth) {
-                if (!d.equals("")) {
-                    int day = Integer.valueOf(d);
-                    Calendar_cell calendar_cell = new Calendar_cell(day, m, y, false,false, false, false, false, false, false, false);
-                    Utils.getInstance(this).addDay(calendar_cell);
-                    daysInYear.add(Utils.getInstance(this).getDay(calendar_cell.getDay(), calendar_cell.getMonth(), calendar_cell.getYear()));
-                    }
-                }
-            }
-        Log.d(TAG, "setYearView: Before count");
-        int count = 0;
-        int count2 = 1;
-        int red = 0;
-        int orange = 0;
-        int yellow = 0;
-        int green = 0;
-        int blue = 0;
-        int purple = 0;
-        int pink = 0;
-        int white = 0;
-        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getDay());
-        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getMonth());
-        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getYear());
         ArrayList<String> weeks = new ArrayList<>();
-        for (int i=0; i< daysInYear.size(); i++){
-            Log.d(TAG, "setYearView: ");
-            Calendar_cell day = daysInYear.get(i);
-            if (day.getRed()){
-                red += 1;
+        if (Utils.getInstance(this).getDay(101,1,selectedDate.getYear()).getDay() != 0){
+            for (int i=101; i<153; i++){
+                weeks.add(String.valueOf(i));
             }
-            if (day.getOrange()){
-                orange += 1;
-            }
-            if (day.getYellow()){
-                yellow += 1;
-            }
-            if (day.getGreen()){
-                green += 1;
-            }
-            if (day.getBlue()){
-                blue += 1;
-            }
-            if (day.getPurple()){
-                purple +=1;;
-            }
-            if (day.getPink()){
-                pink += 1;
-            }
-            if (day.getWhite()){
-                white += 1;
-            }
-            if (count == 13){
-                count = -1;
-                Log.d(TAG, "setYearView: new Calendar Cell");
-                Calendar_cell week = new Calendar_cell(count2 + 100, 1, day.getYear(), false, false, false, false, false, false, false, false);
-                if (red >= 7){
-                    week.setRed(true);
-                }
-                if (orange >= 7){
-                    week.setOrange(true);
-                }
-                if (yellow >= 7){
-                    week.setYellow(true);
-                }
-                if (green >= 7){
-                    week.setGreen(true);
-                }
-                if (blue >= 7){
-                    week.setBlue(true);
-                }
-                if (purple >= 7){
-                    week.setPurple(true);
-                }
-                if (pink >= 7){
-                    week.setPink(true);
-                }
-                if (white >= 7){
-                    week.setWhite(true);
-                }
-                weeks.add(String.valueOf(count2 + 100));
-                Log.d(TAG, "setYearView: count2 + 100 is " + (count2 + 100));
-                if (Utils.getInstance(this).addDay(week).equals("old")){
-                    Utils.getInstance(this).editDay(week);
-                }
-                Log.d(TAG, "setYearView: week's red value is: " + week.getRed());
-                count2 += 1;
-                red = 0;
-                orange = 0;
-                yellow = 0;
-                green = 0;
-                blue = 0;
-                purple = 0;
-                pink = 0;
-                white = 0;
-            }
-            count += 1;
+        } else {
+            weeks = Utils.getInstance(this).generateWeeksForYear(selectedDate);
         }
-        Log.d(TAG, "setYearView: Setting Year View");
-        Log.d(TAG, "setYearView: Size of weeks is " + weeks.size());
         CalendarAdapter calendarAdapter = new CalendarAdapter(weeks, this, selectedDate);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecView.setLayoutManager(layoutManager);
@@ -189,20 +94,7 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     }
 
     private ArrayList<String> daysInMonthArray(LocalDate date) {
-        ArrayList<String> daysInMonthArray = new ArrayList<>();
-        YearMonth yearMonth = YearMonth.from(date);
-        int daysInMonth = yearMonth.lengthOfMonth();
-        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
-        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
-
-        for (int i=1; i<=42; i++){
-            if (i <= dayOfWeek || i > daysInMonth + dayOfWeek){
-                daysInMonthArray.add("");
-            } else {
-                daysInMonthArray.add(String.valueOf(i - dayOfWeek));
-            }
-        }
-        return daysInMonthArray;
+        return (Utils.getInstance(this).daysInMonthArray(date, selectedDate));
     }
 
     private String monthYearFromDate(LocalDate date){
@@ -289,8 +181,11 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 Utils.getInstance(context).updateShow(6,showPinkCheckBox.isChecked());
                 Utils.getInstance(context).updateShow(7,showWhiteCheckBox.isChecked());
 
-                setMonthView();
-                Log.d(TAG, "onClick: SET MONTH VIEW COMPLETE");
+                if (viewTypeBtn.getText().equals("MONTH VIEW")){
+                    setYearView();
+                } else {
+                    setMonthView();
+                }
             }
         });
 

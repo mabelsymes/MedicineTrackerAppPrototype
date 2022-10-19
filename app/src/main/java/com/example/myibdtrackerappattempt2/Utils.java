@@ -9,14 +9,16 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Type;
+import java.time.LocalDate;
+import java.time.YearMonth;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class Utils {
 
     private static final String TAG = "Utils";
-
-//    private static final String DAYS_KEY = "days_key";
     private static final String KEY_KEY = "key_key";
     private static final String SHOW_KEY = "show_key";
     private static Utils instance;
@@ -25,29 +27,9 @@ public class Utils {
 
     public Utils(Context context) {
 
-//        Log.d(TAG, "Utils: About to get sharedPreferences");
         sharedPreferences = context.getSharedPreferences("database", Context.MODE_PRIVATE);
         this.utilsContext = context;
-//        Log.d(TAG, "Utils: Got SharedPreferencesA");
 
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        Gson gson = new Gson();
-//        Log.d(TAG, "Utils: Putting Days String");
-//        editor.putString(DAYS_KEY, gson.toJson(new ArrayList<Calendar_cell>(5)));
-//        Log.d(TAG, "Utils: Before commit");
-//        editor.commit();
-
-//        if (null == getDays()) {
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            editor = sharedPreferences.edit();
-//            Gson gson = new Gson();
-//            gson = new Gson();
-//            Log.d(TAG, "Utils: Putting Days String");
-//            editor.putString(DAYS_KEY, gson.toJson(new ArrayList<Calendar_cell>(5)));
-//            Log.d(TAG, "Utils: Before commit");
-//            editor.commit();
-//        }
-//
         if (null == getKey()){
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor = sharedPreferences.edit();
@@ -90,13 +72,8 @@ public class Utils {
         ArrayList<Calendar_cell> days = dataBaseHelper.getData();
         Log.d(TAG, "getDays: after dataBaseHelper");
         return days;
-//        Gson gson = new Gson();
-//        Type type = new TypeToken<ArrayList<Calendar_cell>>() {}.getType();
-//        Log.d(TAG, "getDays: After Type");
-//        ArrayList<Calendar_cell> days = gson.fromJson(sharedPreferences.getString(DAYS_KEY, null), type);
-//        return days;
     }
-//
+
     public ArrayList<String> getKey() {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
@@ -134,7 +111,7 @@ public class Utils {
 
     public Calendar_cell getDay(int day, int month, int year) {
         ArrayList<Calendar_cell> days = getDays();
-        Calendar_cell toReturn = new Calendar_cell(0,0,0,false,false,false, false, false, false, false, false);
+        Calendar_cell toReturn = new Calendar_cell(0,0,0,false,false,false, false, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         if (null != days) {
             Log.d(TAG, "getDay: NOT NULL");
             for (Calendar_cell c: days){
@@ -153,15 +130,6 @@ public class Utils {
                 }
             }
         }
-////        if (toReturn == null) {
-////            Log.d(TAG, "getDay: toReturn is null");
-////            Calendar_cell newDay = new Calendar_cell();
-////            newDay.setDay(day);
-////            newDay.setMonth(month);
-////            newDay.setYear(year);
-////            addDay(newDay);
-////            toReturn = newDay;
-////        }
         Log.d(TAG, "getDay: Returning... " + toReturn);
         return toReturn;
     }
@@ -176,53 +144,265 @@ public class Utils {
             return("old");
         }
     }
-//
-//    public String addDay(Calendar_cell day) {
-//        if (getDay(day.getDay(),day.getMonth(),day.getYear()) == null) {
-//            Log.d(TAG, "addDay: Adding");
-//            Gson gson = new Gson();
-//            Type type = new TypeToken<ArrayList<Calendar_cell>>() {
-//            }.getType();
-//            Log.d(TAG, "addDay: Before gson.fromJson");
-//            ArrayList<Calendar_cell> newDays = getDays();
-//            Log.d(TAG, "addDay: day is " + day);
-//            newDays.add(day);
-//            SharedPreferences.Editor editor = sharedPreferences.edit();
-//            gson = new Gson();
-//            editor.putString(DAYS_KEY, gson.toJson(newDays));
-//            editor.commit();
-//            return("new");
-//        } else {
-//            return("old");
-//        }
-//    }
-//
+
     public void editDay(Calendar_cell changeDay){
-//        ArrayList<Calendar_cell> days = getDays();
-//        Calendar_cell toChangeDay = null;
-//        for (Calendar_cell d: days) {
-//            if (d.getDay() == changeDay.getDay() && d.getMonth() == changeDay.getMonth() && d.getYear() == changeDay.getYear()) {
-//                toChangeDay = d;
-//            }
-//        }
-//        int changeDayPosition = days.indexOf(toChangeDay);
-//        Log.d(TAG, "editDay: editDay position is " + changeDayPosition);
-//        days.set(changeDayPosition,changeDay);
-//        Log.d(TAG, "editDay: changeDay red is " + days.get(changeDayPosition).getRed());
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this.utilsContext);
         Log.d(TAG, "addDay: EDITING DAY");
         dataBaseHelper.editOne(changeDay);
+    }
 
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        Gson gson = new Gson();
-//        gson = new Gson();
-//        editor.putString(DAYS_KEY, gson.toJson(days));
-//        editor.commit();
-//        days = getDays();
-//        Log.d(TAG, "editDay: changeDay red is " + days.get(changeDayPosition).getRed());
-//        Calendar_cell day = getDay(changeDay.getDay(),changeDay.getMonth(),changeDay.getYear());
-//        Log.d(TAG, "editDay: dayRed is " + day.getRed());
-//        Log.d(TAG, "editDay: length of list is " + days.size());
+    public int getFortnightNumber(int day, int month, int year) {
+        Date date1 = new Date(year, 1, 1);
+        Date date2 = new Date(year, month, day);
+        long dateBefore = date1.getTime();
+        long dateAfter = date2.getTime();
+        long days = (dateAfter - dateBefore);
+        days = TimeUnit.DAYS.convert(days, TimeUnit.MILLISECONDS);
+        int d = Integer.valueOf(String.valueOf(days));
+        return d/14;
+    }
+    public void updateFortnight(int day, int month, int year, ArrayList<String> toAdd, ArrayList<String> toRemove){
+        int fortnightNumber = getFortnightNumber(day, month, year);
+        int dayValue = fortnightNumber + 101;
+        Calendar_cell fortnight = getDay(dayValue, 1, year);
+        if (fortnight.getDay() != 0) {
+            for (String s : toAdd) {
+                if (s.equals("Red")) {
+                    fortnight.setReds(fortnight.getReds() + 1);
+                    if (fortnight.getReds() >= 7) {
+                        fortnight.setRed(true);
+                    }
+                }
+                if (s.equals("Orange")) {
+                    fortnight.setOranges(fortnight.getOranges() + 1);
+                    if (fortnight.getOranges() >= 7) {
+                        fortnight.setOrange(true);
+                    }
+                }
+                if (s.equals("Yellow")) {
+                    fortnight.setYellows(fortnight.getYellows() + 1);
+                    if (fortnight.getYellows() >= 7) {
+                        fortnight.setYellow(true);
+                    }
+                }
+                if (s.equals("Green")) {
+                    fortnight.setGreens(fortnight.getGreens() + 1);
+                    if (fortnight.getGreens() >= 7) {
+                        fortnight.setGreen(true);
+                    }
+                }
+                if (s.equals("Blue")) {
+                    fortnight.setBlues(fortnight.getBlues() + 1);
+                    if (fortnight.getBlues() >= 7) {
+                        fortnight.setBlue(true);
+                    }
+                }
+                if (s.equals("Purple")) {
+                    fortnight.setPurples(fortnight.getPurples() + 1);
+                    if (fortnight.getPurples() >= 7) {
+                        fortnight.setPurple(true);
+                    }
+                }
+                if (s.equals("Pink")) {
+                    fortnight.setPinks(fortnight.getPinks() + 1);
+                    if (fortnight.getPinks() >= 7) {
+                        fortnight.setPink(true);
+                    }
+                }
+                if (s.equals("White")) {
+                    fortnight.setWhites(fortnight.getWhites() + 1);
+                    if (fortnight.getWhites() >= 7) {
+                        fortnight.setWhite(true);
+                    }
+                }
+            }
+            for (String s : toRemove) {
+                if (s.equals("Red")) {
+                    fortnight.setReds(fortnight.getReds() - 1);
+                    if (fortnight.getReds() < 7) {
+                        fortnight.setRed(false);
+                    }
+                }
+                if (s.equals("Orange")) {
+                    fortnight.setOranges(fortnight.getOranges() - 1);
+                    if (fortnight.getOranges() < 7) {
+                        fortnight.setOrange(false);
+                    }
+                }
+                if (s.equals("Yellow")) {
+                    fortnight.setYellows(fortnight.getYellows() - 1);
+                    if (fortnight.getYellows() < 7) {
+                        fortnight.setYellow(false);
+                    }
+                }
+                if (s.equals("Green")) {
+                    fortnight.setGreens(fortnight.getGreens() - 1);
+                    if (fortnight.getGreens() < 7) {
+                        fortnight.setGreen(false);
+                    }
+                }
+                if (s.equals("Blue")) {
+                    fortnight.setBlues(fortnight.getBlues() - 1);
+                    if (fortnight.getBlues() < 7) {
+                        fortnight.setBlue(false);
+                    }
+                }
+                if (s.equals("Purple")) {
+                    fortnight.setPurples(fortnight.getPurples() - 1);
+                    if (fortnight.getPurples() < 7) {
+                        fortnight.setPurple(false);
+                    }
+                }
+                if (s.equals("Pink")) {
+                    fortnight.setPinks(fortnight.getPinks() - 1);
+                    if (fortnight.getPinks() < 7) {
+                        fortnight.setPink(false);
+                    }
+                }
+                if (s.equals("White")) {
+                    fortnight.setWhites(fortnight.getWhites() - 1);
+                    if (fortnight.getWhites() < 7) {
+                        fortnight.setWhite(false);
+                    }
+                }
+            }
+            editDay(fortnight);
+        }
+
+
+    }
+
+    public ArrayList<Calendar_cell> getAllDaysInYear(LocalDate selectedDate){
+        int y = selectedDate.getYear();
+        ArrayList<Calendar_cell> daysInYear = new ArrayList<>();
+        for (int m=1; m<=12; m++){
+            LocalDate startDate = LocalDate.of(y, m,1);
+            ArrayList<String> daysInMonth = daysInMonthArray(startDate, selectedDate);
+            for (String d: daysInMonth) {
+                if (!d.equals("")) {
+                    int day = Integer.valueOf(d);
+                    int fortnightNumber = getFortnightNumber(day, m, y);
+                    Calendar_cell calendar_cell = new Calendar_cell(day, m, y, false,false, false, false, false, false, false, false, fortnightNumber, 0, 0, 0, 0, 0, 0, 0, 0);
+                    addDay(calendar_cell);
+                    daysInYear.add(getDay(calendar_cell.getDay(), calendar_cell.getMonth(), calendar_cell.getYear()));
+                }
+            }
+        }
+        return daysInYear;
+    }
+
+    public ArrayList<String> daysInMonthArray(LocalDate date, LocalDate selectedDate) {
+        ArrayList<String> daysInMonthArray = new ArrayList<>();
+        YearMonth yearMonth = YearMonth.from(date);
+        int daysInMonth = yearMonth.lengthOfMonth();
+        LocalDate firstOfMonth = selectedDate.withDayOfMonth(1);
+        int dayOfWeek = firstOfMonth.getDayOfWeek().getValue();
+
+        for (int i=1; i<=42; i++){
+            if (i <= dayOfWeek || i > daysInMonth + dayOfWeek){
+                daysInMonthArray.add("");
+            } else {
+                daysInMonthArray.add(String.valueOf(i - dayOfWeek));
+            }
+        }
+        return daysInMonthArray;
+    }
+
+    public ArrayList<String> generateWeeksForYear(LocalDate selectedDate) {
+        ArrayList<Calendar_cell> daysInYear = getAllDaysInYear(selectedDate);
+
+        Log.d(TAG, "setYearView: Before count");
+        int count = 0;
+        int count2 = 1;
+        int red = 0;
+        int orange = 0;
+        int yellow = 0;
+        int green = 0;
+        int blue = 0;
+        int purple = 0;
+        int pink = 0;
+        int white = 0;
+        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getDay());
+        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getMonth());
+        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getYear());
+        ArrayList<String> weeks = new ArrayList<>();
+        for (int i=0; i< daysInYear.size(); i++){
+            Log.d(TAG, "setYearView: ");
+            Calendar_cell day = daysInYear.get(i);
+            if (day.getRed()){
+                red += 1;
+            }
+            if (day.getOrange()){
+                orange += 1;
+            }
+            if (day.getYellow()){
+                yellow += 1;
+            }
+            if (day.getGreen()){
+                green += 1;
+            }
+            if (day.getBlue()){
+                blue += 1;
+            }
+            if (day.getPurple()){
+                purple +=1;;
+            }
+            if (day.getPink()){
+                pink += 1;
+            }
+            if (day.getWhite()){
+                white += 1;
+            }
+            if (count == 13){
+                count = -1;
+                Log.d(TAG, "setYearView: new Calendar Cell");
+                Calendar_cell week = new Calendar_cell(count2 + 100, 1, day.getYear(), false, false, false, false, false, false, false, false, 0, red, orange, yellow, green, blue, purple, pink, white);
+                if (red >= 7){
+                    week.setRed(true);
+                }
+                if (orange >= 7){
+                    week.setOrange(true);
+                }
+                if (yellow >= 7){
+                    week.setYellow(true);
+                }
+                if (green >= 7){
+                    week.setGreen(true);
+                }
+                if (blue >= 7){
+                    week.setBlue(true);
+                }
+                if (purple >= 7){
+                    week.setPurple(true);
+                }
+                if (pink >= 7){
+                    week.setPink(true);
+                }
+                if (white >= 7){
+                    week.setWhite(true);
+                }
+                weeks.add(String.valueOf(count2 + 100));
+                Log.d(TAG, "setYearView: count2 + 100 is " + (count2 + 100));
+                if (addDay(week).equals("old")){
+                    editDay(week);
+                }
+                Log.d(TAG, "setYearView: week's red value is: " + week.getRed());
+                count2 += 1;
+                red = 0;
+                orange = 0;
+                yellow = 0;
+                green = 0;
+                blue = 0;
+                purple = 0;
+                pink = 0;
+                white = 0;
+            }
+            count += 1;
+        }
+        Log.d(TAG, "setYearView: Setting Year View");
+        Log.d(TAG, "setYearView: Size of weeks is " + weeks.size());
+        return weeks;
+
     }
 
 }
