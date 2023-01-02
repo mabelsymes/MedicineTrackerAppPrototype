@@ -19,9 +19,6 @@ public class Calendar_cell {
     private int day = 0, month = 0, year = 0, fortnightNumber;
     private int reds, oranges, yellows, greens, blues, purples, pinks, whites;
     private Boolean isRed, isOrange, isYellow, isGreen, isBlue, isPurple, isPink, isWhite;
-    private Context Cal_cellContext;
-    private Button redButton;
-    private TextView cellDayText;
 
     public Calendar_cell(int day, int month, int year, boolean isRed, boolean isOrange, boolean isYellow, boolean isGreen, boolean isBlue, boolean isPurple, boolean isPink, boolean isWhite, int fortnightNumber, int reds, int oranges, int yellows, int greens, int blues, int purples, int pinks, int whites){
         this.isRed = isRed;
@@ -114,10 +111,6 @@ public class Calendar_cell {
         return fortnightNumber;
     }
 
-    public void setFortnightNumber(int fortnightNumber) {
-        this.fortnightNumber = fortnightNumber;
-    }
-
     public Boolean getBlue() {
         return isBlue;
     }
@@ -186,23 +179,11 @@ public class Calendar_cell {
         return day;
     }
 
-    public void setDay(int day) {
-        this.day = day;
-    }
-
     public int getMonth() {
         return month;
     }
 
-    public void setMonth(int month) {
-        this.month = month;
-    }
-
     public int getYear() {
         return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
     }
 }

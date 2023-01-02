@@ -43,7 +43,6 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.activity_calendar_cell, parent, false);
         ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-//        layoutParams.height = (int)(parent.getHeight()*0.24);
         layoutParams.height = (int)(220);
         calAdapContext = parent.getContext();
         return new CalendarViewHolder(view, onItemListener, daysOfMonth, selectedDate);
@@ -58,11 +57,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         if (!day.equals("")) {
             intDay = Integer.valueOf(day);
         }
+
+        int d = 0;
+
         if (intDay > 100){
-            Log.d(TAG, "onBindViewHolder: yearView is true");
+            // the cells are for the year view instead of the month view
             yearView = true;
-            Log.d(TAG, "onBindViewHolder: intDay is " + intDay);
-            int d = intDay-100;
+            d = intDay-100;
             if (d <= 2){
                 holder.dayOfMonth.setText("Jan");
             } else if (d <= 4) {
@@ -88,13 +89,11 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             } else if (d <= 26){
                 holder.dayOfMonth.setText("Dec");
             }
-
         } else {
             holder.dayOfMonth.setText(day);
         }
 
         final int integerDay = intDay;
-        final Boolean finalYearView = yearView;
 
         // SETTING THE COLOUR OF BUTTONS
         if (!daysOfMonth.get(position).equals("")){
@@ -107,11 +106,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             }
             int year = Integer.valueOf(date[0]);
 
-            Log.d(TAG, "onBindViewHolder: Month is " + month);
-            Log.d(TAG, "onBindViewHolder: Year is " + year);
-            Log.d(TAG, "onBindViewHolder: Getting the day");
             Calendar_cell currentDay = Utils.getInstance(calAdapContext).getDay(intDay, month, year);
-            Log.d(TAG, "onBindViewHolder: Red value is " + currentDay.getRed());
 
             if (currentDay.getRed()) {
                 holder.redButton.setVisibility(View.VISIBLE);
@@ -164,15 +159,13 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             holder.whiteButton.setVisibility(View.INVISIBLE);
         }
 
-        // SETTING VISIBILTY OF BUTTONS
+        // SETTING VISIBILITY OF BUTTONS
         ArrayList<String> btnsToShow = new ArrayList<>();
         if (calAdapContext instanceof MainActivity) {
             btnsToShow = ((MainActivity)calAdapContext).selectedCheckButtonsToShow();
         }
         for (String s: btnsToShow){
-            Log.d(TAG, "onBindViewHolder: This is selected: " + s);
         }
-        Log.d(TAG, "onBindViewHolder: Size: " + btnsToShow.size());
         if (btnsToShow.size() != 0){
             if (!btnsToShow.contains("Red")) {
                 holder.redButton.setVisibility(View.INVISIBLE);
@@ -205,117 +198,108 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
             @Override
             public void onClick(View view) {
                 if (view.getContext() instanceof MainActivity) {
-                    if (!finalYearView) {
-                        ArrayList<String> checkedBoxes = ((MainActivity) view.getContext()).selectedRadioButtons();
-                        if (checkedBoxes != null) {
+                    ArrayList<String> checkedBoxes = ((MainActivity) view.getContext()).selectedRadioButtons();
+                    if (checkedBoxes != null) {
 
-                            String[] date = selectedDate.toString().split("-");
-                            int month = Integer.valueOf(date[1]);
-                            int year = Integer.valueOf(date[0]);
-                            Calendar_cell currentDay = Utils.getInstance(view.getContext()).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
-                            Log.d(TAG, "onClick: FortnightNumber is " + currentDay.getFortnightNumber());
+                        String[] date = selectedDate.toString().split("-");
+                        int month = Integer.valueOf(date[1]);
+                        int year = Integer.valueOf(date[0]);
+                        Calendar_cell currentDay = Utils.getInstance(view.getContext()).getDay(Integer.valueOf(daysOfMonth.get(position)), month, year);
 
-                            ArrayList<String> toAdd = new ArrayList<>();
-                            ArrayList<String> toRemove = new ArrayList<>();
+                        ArrayList<String> toAdd = new ArrayList<>();
+                        ArrayList<String> toRemove = new ArrayList<>();
 
-                            if (checkedBoxes.contains("Red")) {
-                                Boolean red = currentDay.getRed();
-                                if (Boolean.TRUE.equals(red)){
-                                    toRemove.add("Red");
-                                } else {
-                                    toAdd.add("Red");
-                                }
-                                currentDay.setRed(!red);
-                                Utils.getInstance(view.getContext()).editDay(currentDay);
-                                notifyItemChanged(position);
+                        if (checkedBoxes.contains("Red")) {
+                            Boolean red = currentDay.getRed();
+                            if (Boolean.TRUE.equals(red)){
+                                toRemove.add("Red");
+                            } else {
+                                toAdd.add("Red");
                             }
-                            if (checkedBoxes.contains("Orange")) {
-                                Boolean orange = currentDay.getOrange();
-                                if (Boolean.TRUE.equals(orange)){
-                                    toRemove.add("Orange");
-                                } else {
-                                    toAdd.add("Orange");
-                                }
-                                currentDay.setOrange(!orange);
-                                Utils.getInstance(view.getContext()).editDay(currentDay);
-                                notifyItemChanged(position);
-                            }
-                            if (checkedBoxes.contains("Yellow")) {
-                                Boolean yellow = currentDay.getYellow();
-                                if (Boolean.TRUE.equals(yellow)){
-                                    toRemove.add("Yellow");
-                                } else {
-                                    toAdd.add("Yellow");
-                                }
-                                currentDay.setYellow(!yellow);
-                                Utils.getInstance(view.getContext()).editDay(currentDay);
-                                notifyItemChanged(position);
-                            }
-                            if (checkedBoxes.contains("Green")) {
-                                Log.d(TAG, "onClick: CheckedBoxes contains Green");
-                                Boolean green = currentDay.getGreen();
-                                if (Boolean.TRUE.equals(green)){
-                                    toRemove.add("Green");
-                                } else {
-                                    toAdd.add("Green");
-                                }
-                                currentDay.setGreen(!green);
-                                Utils.getInstance(view.getContext()).editDay(currentDay);
-                                notifyItemChanged(position);
-                            }
-                            if (checkedBoxes.contains("Blue")) {
-                                Log.d(TAG, "onClick: CheckedBoxes contains Blue");
-                                Boolean blue = currentDay.getBlue();
-                                if (Boolean.TRUE.equals(blue)){
-                                    toRemove.add("Blue");
-                                } else {
-                                    toAdd.add("Blue");
-                                }
-                                currentDay.setBlue(!blue);
-                                Utils.getInstance(view.getContext()).editDay(currentDay);
-                                notifyItemChanged(position);
-                            }
-                            if (checkedBoxes.contains("Purple")) {
-                                Log.d(TAG, "onClick: CheckedBoxes contains Purple");
-                                Boolean purple = currentDay.getPurple();
-                                if (Boolean.TRUE.equals(purple)){
-                                    toRemove.add("Purple");
-                                } else {
-                                    toAdd.add("Purple");
-                                }
-                                currentDay.setPurple(!purple);
-                                Utils.getInstance(view.getContext()).editDay(currentDay);
-                                notifyItemChanged(position);
-                            }
-                            if (checkedBoxes.contains("Pink")) {
-                                Log.d(TAG, "onClick: CheckedBoxes contains Pink");
-                                Boolean pink = currentDay.getPink();
-                                if (Boolean.TRUE.equals(pink)){
-                                    toRemove.add("Pink");
-                                } else {
-                                    toAdd.add("Pink");
-                                }
-                                currentDay.setPink(!pink);
-                                Utils.getInstance(view.getContext()).editDay(currentDay);
-                                notifyItemChanged(position);
-                            }
-                            if (checkedBoxes.contains("White")) {
-                                Log.d(TAG, "onClick: CheckedBoxes contains White");
-                                Boolean white = currentDay.getWhite();
-                                if (Boolean.TRUE.equals(white)){
-                                    toRemove.add("White");
-                                } else {
-                                    toAdd.add("White");
-                                }
-                                currentDay.setWhite(!white);
-                                Utils.getInstance(view.getContext()).editDay(currentDay);
-                                notifyItemChanged(position);
-                            }
-
-                            Utils.getInstance(calAdapContext).updateFortnight(integerDay, month, year, toAdd, toRemove);
+                            currentDay.setRed(!red);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
                         }
-                    }
+                        if (checkedBoxes.contains("Orange")) {
+                            Boolean orange = currentDay.getOrange();
+                            if (Boolean.TRUE.equals(orange)){
+                                toRemove.add("Orange");
+                            } else {
+                                toAdd.add("Orange");
+                            }
+                            currentDay.setOrange(!orange);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Yellow")) {
+                            Boolean yellow = currentDay.getYellow();
+                            if (Boolean.TRUE.equals(yellow)){
+                                toRemove.add("Yellow");
+                            } else {
+                                toAdd.add("Yellow");
+                            }
+                            currentDay.setYellow(!yellow);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Green")) {
+                            Boolean green = currentDay.getGreen();
+                            if (Boolean.TRUE.equals(green)){
+                                toRemove.add("Green");
+                            } else {
+                                toAdd.add("Green");
+                            }
+                            currentDay.setGreen(!green);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Blue")) {
+                            Boolean blue = currentDay.getBlue();
+                            if (Boolean.TRUE.equals(blue)){
+                                toRemove.add("Blue");
+                            } else {
+                                toAdd.add("Blue");
+                            }
+                            currentDay.setBlue(!blue);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Purple")) {
+                            Boolean purple = currentDay.getPurple();
+                            if (Boolean.TRUE.equals(purple)){
+                                toRemove.add("Purple");
+                            } else {
+                                toAdd.add("Purple");
+                            }
+                            currentDay.setPurple(!purple);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("Pink")) {
+                            Boolean pink = currentDay.getPink();
+                            if (Boolean.TRUE.equals(pink)){
+                                toRemove.add("Pink");
+                            } else {
+                                toAdd.add("Pink");
+                            }
+                            currentDay.setPink(!pink);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
+                        if (checkedBoxes.contains("White")) {
+                            Boolean white = currentDay.getWhite();
+                            if (Boolean.TRUE.equals(white)){
+                                toRemove.add("White");
+                            } else {
+                                toAdd.add("White");
+                            }
+                            currentDay.setWhite(!white);
+                            Utils.getInstance(view.getContext()).editDay(currentDay);
+                            notifyItemChanged(position);
+                        }
 
+                        Utils.getInstance(calAdapContext).updateFortnight(integerDay, month, year, toAdd, toRemove);
+                    }
                 }
             }
         });

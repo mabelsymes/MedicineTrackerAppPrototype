@@ -44,7 +44,6 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         setContentView(R.layout.activity_main);
         initWidgets();
         selectedDate = LocalDate.now();
-        Log.d(TAG, "onCreate: Selected date is " + selectedDate);
         setMonthView();
     }
 
@@ -59,17 +58,15 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 String[] date = selectedDate.toString().split("-");
                 int month = Integer.valueOf(date[1]);
                 int year = Integer.valueOf(date[0]);
-                Log.d(TAG, "setMonthView: Yoooo The date is " + day + month + year);
                 int fortnightNumber = Utils.getInstance(this).getFortnightNumber(day, month, year);
                 Calendar_cell calendar_cell = new Calendar_cell(day, month, year, false,false, false, false, false, false, false, false, fortnightNumber, 0, 0, 0, 0, 0, 0, 0, 0);
 
-                Log.d(TAG, "setMonthView: About to get Utils");
                 if (Utils.getInstance(this).addDay(calendar_cell).equals("old")){
+                    // All days of month have already been added
                     break;
                 }
             }
         }
-        Log.d(TAG, "setMonthView: qwerty");
         CalendarAdapter calendarAdapter = new CalendarAdapter(daysInMonth, this, selectedDate);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecView.setLayoutManager(layoutManager);
@@ -80,13 +77,14 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         monthYearText.setText(String.valueOf(selectedDate.getYear()));
         daysOfWeekLinLayout.setVisibility(View.INVISIBLE);
         ArrayList<String> weeks = new ArrayList<>();
-        if (Utils.getInstance(this).getDay(101,1,selectedDate.getYear()).getDay() != 0){
-            for (int i=101; i<153; i++){
+        int year = selectedDate.getYear();
+        for (int i=101; i<127; i++){
                 weeks.add(String.valueOf(i));
+                if (Utils.getInstance(this).getDay(i,1,year).getDay() == 0){
+                    Calendar_cell newFortnight = new Calendar_cell(i, 1, year, false, false, false, false, false, false, false, false, i-101, 0, 0, 0, 0, 0, 0, 0, 0);
+                    Utils.getInstance(this).addDay(newFortnight);
+                }
             }
-        } else {
-            weeks = Utils.getInstance(this).generateWeeksForYear(selectedDate);
-        }
         CalendarAdapter calendarAdapter = new CalendarAdapter(weeks, this, selectedDate);
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getApplicationContext(), 7);
         calendarRecView.setLayoutManager(layoutManager);
@@ -149,7 +147,6 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
         whiteMeaningEditTxt.setText(keys.get(7));
 
         ArrayList<Boolean> show = Utils.getInstance(this).getShow();
-        Log.d(TAG, "initWidgets: showRedCheckBox is set to " + show.get(0));
         showRedCheckBox.setChecked(show.get(0));
         showOrangeCheckBox.setChecked(show.get(1));
         showYellowCheckBox.setChecked(show.get(2));
@@ -172,7 +169,6 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
                 Utils.getInstance(context).updateKey(7,whiteMeaningEditTxt.getText().toString());
 
                 Utils.getInstance(context).updateShow(0,showRedCheckBox.isChecked());
-                Log.d(TAG, "onClick: showRedCheckBox is " + showRedCheckBox.isChecked());
                 Utils.getInstance(context).updateShow(1,showOrangeCheckBox.isChecked());
                 Utils.getInstance(context).updateShow(2,showYellowCheckBox.isChecked());
                 Utils.getInstance(context).updateShow(3,showGreenCheckBox.isChecked());
@@ -285,12 +281,8 @@ public class MainActivity extends AppCompatActivity implements CalendarAdapter.O
     @Override
     public void onItemClick(int position, String dayText, String day, LocalDate selectedDate) {
         if (dayText.equals("")){
-
         } else {
-//            String message = "Selected Date " + dayText + " " + monthYearFromDate(selectedDate);
-//            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }
-
     }
 
     public ArrayList<String> selectedRadioButtons(){

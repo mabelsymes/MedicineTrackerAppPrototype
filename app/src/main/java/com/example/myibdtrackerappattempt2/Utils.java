@@ -66,18 +66,14 @@ public class Utils {
     }
 
     public ArrayList<Calendar_cell> getDays() {
-        Log.d(TAG, "getDays: before dataBaseHelper");
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this.utilsContext);
-        Log.d(TAG, "getDays: CRYING");
         ArrayList<Calendar_cell> days = dataBaseHelper.getData();
-        Log.d(TAG, "getDays: after dataBaseHelper");
         return days;
     }
 
     public ArrayList<String> getKey() {
         Gson gson = new Gson();
         Type type = new TypeToken<ArrayList<String>>() {}.getType();
-        Log.d(TAG, "getDays: After Type");
         ArrayList<String> key = gson.fromJson(sharedPreferences.getString(KEY_KEY, null), type);
         return key;
     }
@@ -88,7 +84,7 @@ public class Utils {
         ArrayList<Boolean> show = gson.fromJson(sharedPreferences.getString(SHOW_KEY, null), type);
         return show;
     }
-//
+
     public void updateKey(int position, String text) {
         ArrayList<String> key = getKey();
         key.set(position, text);
@@ -113,16 +109,11 @@ public class Utils {
         ArrayList<Calendar_cell> days = getDays();
         Calendar_cell toReturn = new Calendar_cell(0,0,0,false,false,false, false, false, false, false, false, 0, 0, 0, 0, 0, 0, 0, 0, 0);
         if (null != days) {
-            Log.d(TAG, "getDay: NOT NULL");
             for (Calendar_cell c: days){
                 if (c.getYear() == year) {
                     if (c.getMonth() == month) {
                         if (c.getDay() == day) {
-                            Log.d(TAG, "getDay: day has value: " + day);
-                            Log.d(TAG, "getDay: c's red is " + c.getRed());
-                            Log.d(TAG, "getDay: c's day is " + c.getDay());
                             int position = days.indexOf(c);
-                            Log.d(TAG, "getDay: position is " + position);
                             toReturn = c;
                             break;
                         }
@@ -130,14 +121,12 @@ public class Utils {
                 }
             }
         }
-        Log.d(TAG, "getDay: Returning... " + toReturn);
         return toReturn;
     }
 
     public String addDay(Calendar_cell day) {
         if (getDay(day.getDay(),day.getMonth(),day.getYear()).getDay() == 0) {
             DataBaseHelper dataBaseHelper = new DataBaseHelper(this.utilsContext);
-            Log.d(TAG, "addDay: ADDING DAY");
             dataBaseHelper.addOne(day);
             return("new");
         } else {
@@ -147,7 +136,6 @@ public class Utils {
 
     public void editDay(Calendar_cell changeDay){
         DataBaseHelper dataBaseHelper = new DataBaseHelper(this.utilsContext);
-        Log.d(TAG, "addDay: EDITING DAY");
         dataBaseHelper.editOne(changeDay);
     }
 
@@ -161,6 +149,7 @@ public class Utils {
         int d = Integer.valueOf(String.valueOf(days));
         return d/14;
     }
+
     public void updateFortnight(int day, int month, int year, ArrayList<String> toAdd, ArrayList<String> toRemove){
         int fortnightNumber = getFortnightNumber(day, month, year);
         int dayValue = fortnightNumber + 101;
@@ -267,9 +256,36 @@ public class Utils {
                 }
             }
             editDay(fortnight);
+        } else {
+            fortnight = new Calendar_cell(dayValue, 1, year, false, false, false, false, false, false, false, false, getFortnightNumber(day, month, year), 0, 0, 0, 0, 0, 0, 0, 0);
+            for (String s : toAdd) {
+                if (s.equals("Red")) {
+                    fortnight.setReds(1);
+                }
+                if (s.equals("Orange")) {
+                    fortnight.setOranges(1);
+                }
+                if (s.equals("Yellow")) {
+                    fortnight.setYellows(1);
+                }
+                if (s.equals("Green")) {
+                    fortnight.setGreens(1);
+                }
+                if (s.equals("Blue")) {
+                    fortnight.setBlues(1);
+                }
+                if (s.equals("Purple")) {
+                    fortnight.setPurples(1);
+                }
+                if (s.equals("Pink")) {
+                    fortnight.setPinks(1);
+                }
+                if (s.equals("White")) {
+                    fortnight.setWhites(1);
+                }
+            }
+            addDay(fortnight);
         }
-
-
     }
 
     public ArrayList<Calendar_cell> getAllDaysInYear(LocalDate selectedDate){
@@ -310,8 +326,6 @@ public class Utils {
 
     public ArrayList<String> generateWeeksForYear(LocalDate selectedDate) {
         ArrayList<Calendar_cell> daysInYear = getAllDaysInYear(selectedDate);
-
-        Log.d(TAG, "setYearView: Before count");
         int count = 0;
         int count2 = 1;
         int red = 0;
@@ -322,12 +336,8 @@ public class Utils {
         int purple = 0;
         int pink = 0;
         int white = 0;
-        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getDay());
-        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getMonth());
-        Log.d(TAG, "setYearView: beginning is " + daysInYear.get(0).getYear());
         ArrayList<String> weeks = new ArrayList<>();
         for (int i=0; i< daysInYear.size(); i++){
-            Log.d(TAG, "setYearView: ");
             Calendar_cell day = daysInYear.get(i);
             if (day.getRed()){
                 red += 1;
@@ -355,7 +365,6 @@ public class Utils {
             }
             if (count == 13){
                 count = -1;
-                Log.d(TAG, "setYearView: new Calendar Cell");
                 Calendar_cell week = new Calendar_cell(count2 + 100, 1, day.getYear(), false, false, false, false, false, false, false, false, 0, red, orange, yellow, green, blue, purple, pink, white);
                 if (red >= 7){
                     week.setRed(true);
@@ -382,11 +391,9 @@ public class Utils {
                     week.setWhite(true);
                 }
                 weeks.add(String.valueOf(count2 + 100));
-                Log.d(TAG, "setYearView: count2 + 100 is " + (count2 + 100));
                 if (addDay(week).equals("old")){
                     editDay(week);
                 }
-                Log.d(TAG, "setYearView: week's red value is: " + week.getRed());
                 count2 += 1;
                 red = 0;
                 orange = 0;
@@ -399,8 +406,6 @@ public class Utils {
             }
             count += 1;
         }
-        Log.d(TAG, "setYearView: Setting Year View");
-        Log.d(TAG, "setYearView: Size of weeks is " + weeks.size());
         return weeks;
 
     }

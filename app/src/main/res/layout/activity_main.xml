@@ -427,7 +427,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/viewTypeBtn"
                 android:text="YEAR VIEW"
-                android:layout_marginRight="10dp"
+                android:layout_marginRight="5dp"
                 />
 
             <Button
@@ -436,7 +436,7 @@
                 android:id="@+id/goToCurrentDateBtn"
                 android:text="Current Date"
                 android:layout_toRightOf="@+id/updateBtn"
-                android:layout_marginLeft="10dp"
+                android:layout_marginLeft="5dp"
                 android:layout_centerVertical="true"
                 />
 

@@ -18,8 +18,6 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static final String TAG = "DataBaseHelper";
     public static final String CUSTOMER_TABLE = "CUSTOMER_TABLE";
-    public static final String COLUMN_MED_INFO = "COLUMN_MED_INFO";
-    public static final String COLUMN_SHOW_INFO = "COLUMN_SHOW_INFO";
     public static final String COLUMN_DATE = "COLUMN_DATE";
     public static final String COLUMN_ISRED = "COLUMN_ISRED";
     public static final String COLUMN_ISORANGE = "COLUMN_ISORANGE";
@@ -77,26 +75,17 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         cv.put(COLUMN_PINKS, calendar_cell.getPinks());
         cv.put(COLUMN_WHITES, calendar_cell.getWhites());
 
-        Log.d(TAG, "addOne: About to insert");
         db.insert(CUSTOMER_TABLE,null,cv);
     }
 
     public ArrayList<Calendar_cell> getData(){
-        Log.d(TAG, "getData: Getting data");
         ArrayList<Calendar_cell> returnList = new ArrayList<>();
-        Log.d(TAG, "getData: before query");
         String queryString = "SELECT * FROM " + CUSTOMER_TABLE;
-        Log.d(TAG, "getData: After select");
         SQLiteDatabase db = this.getReadableDatabase();
-        Log.d(TAG, "getData: Before query");
         Cursor cursor = db.rawQuery(queryString, null);
-        Log.d(TAG, "getData: Before cursor");
         if (cursor.moveToFirst()){
             // loop through and create new customer object for each row
-            Log.d(TAG, "getData: WOOOORKING");
             do {
-                int dateID = cursor.getInt(0);
-
                 String date = cursor.getString(1);
                 String[] realDate = date.toString().split("-");
                 int day = Integer.valueOf(realDate[0]);
@@ -126,11 +115,10 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
             } while (cursor.moveToNext());
         } else {
-            // failure. do not add anything
+            // failure
         }
         cursor.close();
         db.close();
-        Log.d(TAG, "getData: RETURNING");
         return returnList;
     }
 
