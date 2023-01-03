@@ -1,6 +1,6 @@
 # Medicine Tracker App
 
-The aim of this project is to create an easy way to record medication / symptoms such that the user's general progess can be tracked.
+The aim of this project is to create an easy way to record medication / symptoms such that the user's general progess can be tracked. Note: This is a prototype only so do not enter real, personal data.
 
 ## How To Use
 
