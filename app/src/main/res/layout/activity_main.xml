@@ -5,7 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/black"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -31,7 +33,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="June 2022"
-            android:textSize="20sp"/>
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            />
 
         <Button
             android:id="@+id/btnNext"
@@ -63,6 +67,7 @@
             android:textAlignment="center"
             android:textSize="16sp"
             android:text=" SUN "
+            android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -71,6 +76,7 @@
             android:textAlignment="center"
             android:textSize="16sp"
             android:text=" MON "
+            android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -79,6 +85,7 @@
             android:textAlignment="center"
             android:textSize="16sp"
             android:text="TUES"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -87,6 +94,7 @@
             android:textAlignment="center"
             android:textSize="16sp"
             android:text="WED"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -95,6 +103,7 @@
             android:textAlignment="center"
             android:textSize="16sp"
             android:text="THUR"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -103,6 +112,7 @@
             android:textAlignment="center"
             android:textSize="16sp"
             android:text="FRI"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
         <TextView
@@ -111,6 +121,7 @@
             android:textAlignment="center"
             android:textSize="16sp"
             android:text="SAT"
+            android:textColor="@color/white"
             android:layout_height="wrap_content"/>
 
     </LinearLayout>
@@ -137,7 +148,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/red"
-                android:text="Red: " />
+                />
 
             <EditText
                 android:id="@+id/redMeaningEditTxt"
@@ -147,42 +158,42 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/redCheckBox"
                 android:hint="Red"
-                android:maxWidth="115dp"
+                android:maxWidth="130dp"
                 android:maxLength="25"
-                android:minWidth="115dp"
+                android:minWidth="130dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:textSize="15sp" />
 
             <CheckBox
                 android:id="@+id/orangeCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Orange: "
                 android:layout_marginLeft="5dp"
-                android:buttonTint="@color/orange"
                 android:layout_toRightOf="@id/redMeaningEditTxt"
-                />
+                android:buttonTint="@color/orange" />
 
             <EditText
                 android:id="@+id/orangeMeaningEditTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="Orange"
-                android:textSize="15sp"
-                android:minWidth="100dp"
-                android:maxWidth="100dp"
-                android:maxLength="25"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_toRightOf="@id/orangeCheckBox"
-                />
+                android:hint="Orange"
+                android:maxWidth="130dp"
+                android:maxLength="25"
+                android:minWidth="130dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="15sp" />
 
             <CheckBox
                 android:id="@+id/yellowCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Yellow: "
-                android:buttonTint="@color/yellow"
                 android:layout_below="@id/redMeaningEditTxt"
+                android:buttonTint="@color/yellow"
                 />
 
             <EditText
@@ -190,24 +201,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/redMeaningEditTxt"
-                android:layout_marginRight="5dp"
                 android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_toRightOf="@id/yellowCheckBox"
                 android:hint="Yellow"
+                android:maxWidth="130dp"
                 android:maxLength="25"
-                android:maxWidth="98dp"
-                android:minWidth="98dp"
+                android:minWidth="130dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:textSize="15sp" />
 
             <CheckBox
                 android:id="@+id/greenCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Green: "
-                android:buttonTint="@color/green"
-                android:layout_toRightOf="@id/yellowMeaningEditTxt"
                 android:layout_below="@id/orangeMeaningEditTxt"
-                />
+                android:layout_toRightOf="@id/yellowMeaningEditTxt"
+                android:buttonTint="@color/green" />
 
             <EditText
                 android:id="@+id/greenMeaningEditTxt"
@@ -218,15 +229,16 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/greenCheckBox"
                 android:hint="Green"
-                android:maxWidth="100dp"
-                android:minWidth="100dp"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:maxWidth="130dp"
+                android:minWidth="130dp"
                 android:textSize="15sp" />
 
             <CheckBox
                 android:id="@+id/blueCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Blue: "
                 android:buttonTint="@color/blue"
                 android:layout_below="@id/yellowMeaningEditTxt"
                 />
@@ -240,9 +252,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/blueCheckBox"
                 android:hint="Blue"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:maxLength="25"
-                android:maxWidth="110dp"
-                android:minWidth="110dp"
+                android:maxWidth="130dp"
+                android:minWidth="130dp"
                 android:textSize="15sp" />
 
             <CheckBox
@@ -251,7 +265,6 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/greenMeaningEditTxt"
                 android:layout_toRightOf="@id/blueMeaningEditTxt"
-                android:text="Purple: "
                 android:buttonTint="@color/purple"
                 />
 
@@ -264,16 +277,17 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/purpleCheckBox"
                 android:hint="Purple"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:maxLength="25"
-                android:maxWidth="100dp"
-                android:minWidth="100dp"
+                android:maxWidth="130dp"
+                android:minWidth="130dp"
                 android:textSize="15sp" />
 
             <CheckBox
                 android:id="@+id/pinkCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pink: "
                 android:buttonTint="@color/pink"
                 android:layout_below="@id/blueMeaningEditTxt"
                 />
@@ -287,16 +301,17 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/pinkCheckBox"
                 android:hint="Pink"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:maxLength="25"
-                android:maxWidth="110dp"
-                android:minWidth="110dp"
+                android:maxWidth="130dp"
+                android:minWidth="130dp"
                 android:textSize="15sp" />
 
             <CheckBox
                 android:id="@+id/whiteCheckBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="White: "
                 android:buttonTint="@color/white"
                 android:layout_toRightOf="@+id/pinkMeaningEditTxt"
                 android:layout_below="@id/purpleMeaningEditTxt"
@@ -311,9 +326,11 @@
                 android:layout_marginTop="5dp"
                 android:layout_toRightOf="@id/whiteCheckBox"
                 android:hint="White"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:maxLength="25"
-                android:maxWidth="100dp"
-                android:minWidth="100dp"
+                android:maxWidth="130dp"
+                android:minWidth="130dp"
                 android:textSize="15sp" />
 
         </RelativeLayout>
@@ -339,6 +356,7 @@
                 android:id="@+id/showTextView"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
+                android:textColor="@color/white"
                 />
 
             <CheckBox

@@ -92,6 +92,7 @@ public class CalendarAdapter extends RecyclerView.Adapter<CalendarViewHolder> {
         } else {
             holder.dayOfMonth.setText(day);
         }
+        holder.dayOfMonth.setTextColor(Color.WHITE);
 
         final int integerDay = intDay;
 
