@@ -10,7 +10,8 @@ The aim of this project is to create an easy way to record medication / symptoms
 2. Download the zip file of this application's code 
 3. Open the application in Android Studio
 4. Connect computer to android phone
-5. Run (press green arrow)
+5. Troubleshoot connections and make sure phone is on developer mode
+6. Run (press green arrow)
 
 ### Using Application
 
