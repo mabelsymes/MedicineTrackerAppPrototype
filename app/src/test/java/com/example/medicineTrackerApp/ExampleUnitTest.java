@@ -1,4 +1,4 @@
-package com.example.myibdtrackerappattempt2;
+package com.example.medicineTrackerApp;
 
 import org.junit.Test;
 

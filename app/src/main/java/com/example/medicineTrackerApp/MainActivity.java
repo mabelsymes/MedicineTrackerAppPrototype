@@ -1,4 +1,4 @@
-package com.example.myibdtrackerappattempt2;
+package com.example.medicineTrackerApp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;

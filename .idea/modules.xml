@@ -2,11 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/My_IBD_Tracker_App_Attempt_2.iml" filepath="$PROJECT_DIR$/.idea/modules/My_IBD_Tracker_App_Attempt_2.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_IBD_Tracker_App_Attempt_2.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_IBD_Tracker_App_Attempt_2.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_IBD_Tracker_App_Attempt_2.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_IBD_Tracker_App_Attempt_2.app.androidTest.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_IBD_Tracker_App_Attempt_2.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_IBD_Tracker_App_Attempt_2.app.main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_IBD_Tracker_App_Attempt_2.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_IBD_Tracker_App_Attempt_2.app.unitTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/medicineTrackerApp.iml" filepath="$PROJECT_DIR$/.idea/modules/medicineTrackerApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/medicineTrackerApp.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/medicineTrackerApp.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/medicineTrackerApp.app.androidTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/medicineTrackerApp.app.androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/medicineTrackerApp.app.main.iml" filepath="$PROJECT_DIR$/.idea/modules/app/medicineTrackerApp.app.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/medicineTrackerApp.app.unitTest.iml" filepath="$PROJECT_DIR$/.idea/modules/app/medicineTrackerApp.app.unitTest.iml" />
     </modules>
   </component>
 </project>

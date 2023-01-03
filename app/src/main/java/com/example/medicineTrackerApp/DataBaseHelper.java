@@ -1,4 +1,4 @@
-package com.example.myibdtrackerappattempt2;
+package com.example.medicineTrackerApp;
 
 import android.content.ContentValues;
 import android.content.Context;
