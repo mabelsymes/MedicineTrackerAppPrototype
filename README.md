@@ -1,7 +1,7 @@
 # MedicineTrackerApp
 Second project using Java and Android Studio.
 
-The aim of this project was to create a easy way to record medicine / symptoms such that the person's general progess can be tracked.
+The aim of this project is to create a easy way to record medicine / symptoms such that the person's general progess can be tracked.
 
 The app opens on the current month. To navigate, there is a "PREV" and "NEXT" button at the top. Pressing "PREV" for a short amount of time moves you to the previous month and holding it down moves you to the previous year ("NEXT" works similarly). The current month and year are displayed at the top. By clicking one of the 8 colour checkboxes and the digit display of a day, a bar of that colour can be added or removed for that day. Multiple colours can be selected at once.
 
