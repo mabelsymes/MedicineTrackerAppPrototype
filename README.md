@@ -21,7 +21,7 @@ The app opens on the current month. To navigate, there is a "PREV" and "NEXT" bu
 
 The meaning of each colour can be edited by the user and the "UPDATE" button at the bottom pressed to save their input. The checkboxes at the bottom after "Show" indicate which colours will be displayed on the calender. Clicking "UPDATE" will implement these changes. This can be useful if you wish to only focus on one particular medication or symptom.
 
-"CURRENT DATE" moves the user back to the current date on the calendar. "YEAR VIEW" allows the user to see an overview of each year per page ("PREV" transports them to either the previous year, if tapping the button, or ten years ago, if holding down the button). The contents cannot be changed, so it is mainly to see the user's progress over that year. Once again, they can choose which colours are shown.
+"CURRENT DATE" moves the user back to the current date on the calendar. "YEAR VIEW" allows the user to see an overview of each year per page ("PREV" transports them to either the previous year, if tapping the button, or ten years ago, if holding down the button). Contents cannot be changed in year view, so it is mainly to see the user's progress over that year. Once again, they can choose which colours are shown.
 
 The user's data is stored locally on the phone using a SQLite database.
 
